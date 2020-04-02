@@ -20,6 +20,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { store, persistor } from '~/store';
 
 import DeliveryForm from '~/pages/Delivery/Form';
+import DeliverymanForm from '~/pages/Deliveryman/Form';
+import RecipientForm from '~/pages/Recipient/Form';
 
 export default function Routes() {
   return (
@@ -38,9 +40,26 @@ export default function Routes() {
               component={DeliveryForm}
               isPrivate
             />
-            <Route path="/deliveryman" component={Deliveryman} isPrivate />
+            <Route
+              exact
+              path="/deliveryman"
+              component={Deliveryman}
+              isPrivate
+            />
+            <Route
+              exact
+              path="/deliveryman/create"
+              component={DeliverymanForm}
+              isPrivate
+            />
+            <Route exact path="/recipient" component={Recipient} isPrivate />
+            <Route
+              exact
+              path="/recipient/create"
+              component={RecipientForm}
+              isPrivate
+            />
             <Route path="/problem" component={Problem} isPrivate />
-            <Route path="/recipient" component={Recipient} isPrivate />
             <Route path="/profile" component={Profile} isPrivate />
           </Switch>
         </Router>
