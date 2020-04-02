@@ -8,5 +8,5 @@ export default function Profile({ children }) {
 }
 
 Profile.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.instanceOf(Array).isRequired,
 };

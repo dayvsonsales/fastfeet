@@ -8,5 +8,5 @@ export default function ActionList({ children }) {
 }
 
 ActionList.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.instanceOf(Array).isRequired,
 };
