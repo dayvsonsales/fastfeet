@@ -3,8 +3,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MdAdd, MdMoreHoriz, MdDeleteForever, MdCreate } from 'react-icons/md';
 
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import api from '~/services/api';
-
 import image from '~/assets/Image 1.png';
 
 import { Container } from './styles';
@@ -16,7 +16,7 @@ import DeliveryStatus from '~/components/DeliveryStatus';
 import { Dropdown, DropdownContent } from '~/components/Dropdown/styles';
 import SearchInput from '~/components/ActionList/SearchInput';
 
-export default function Deliveryman() {
+export default function Deliveryman({ history }) {
   return (
     <Container>
       <header>
@@ -25,7 +25,10 @@ export default function Deliveryman() {
       <ActionList>
         <SearchInput placeholder="Buscar por entregadores" />
 
-        <button type="button">
+        <button
+          type="button"
+          onClick={() => history.push('/deliveryman/create')}
+        >
           <MdAdd size={24} color="#fff" />
           <span>Cadastrar</span>
         </button>
@@ -103,3 +106,7 @@ export default function Deliveryman() {
     </Container>
   );
 }
+
+Deliveryman.propTypes = {
+  history: PropTypes.shape().isRequired,
+};
