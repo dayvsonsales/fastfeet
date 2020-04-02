@@ -2,7 +2,11 @@ import React from 'react';
 
 import { MdDone, MdKeyboardArrowLeft } from 'react-icons/md';
 import Select from 'react-select';
-import { Container, FormContainer } from './styles';
+import { useLocation, useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Container, FormContainer, Row, Column, Input } from './styles';
+import Button from '~/components/Button';
+
 import ActionList from '~/components/ActionList';
 
 const options = [
@@ -11,32 +15,66 @@ const options = [
   { value: 'vanilla', label: 'Vanilla' },
 ];
 
-export default function Form() {
+export default function Form({ history }) {
+  const location = useLocation();
+  const { id } = useParams();
+
+  const title =
+    location.pathname.indexOf('edit') > -1
+      ? 'Edição de encomendas'
+      : 'Cadastro de encomendas';
+
   return (
     <Container>
       <header>
-        <strong>Cadastro de encomendas</strong>
+        <strong>{title}</strong>
         <div>
-          <button disabled type="button">
+          <Button grey={1} type="button" onClick={() => history.goBack()}>
             <MdKeyboardArrowLeft size={24} color="#fff" />
             <span>Voltar</span>
-          </button>
-          <button type="button">
+          </Button>
+          <Button type="button">
             <MdDone size={24} color="#fff" />
             <span>Salvar</span>
-          </button>
+          </Button>
         </div>
       </header>
 
       <FormContainer>
-        <label htmlFor="" />
-        <Select
-          options={options}
-          components={{
-            IndicatorSeparator: () => null,
-          }}
-        />
+        <Row>
+          <Column>
+            <label>Destinatário</label>
+            <Select
+              id="recipient"
+              options={options}
+              components={{
+                IndicatorSeparator: () => null,
+              }}
+            />
+          </Column>
+
+          <Column>
+            <label>Entregador</label>
+            <Select
+              id="deliveryman"
+              options={options}
+              components={{
+                IndicatorSeparator: () => null,
+              }}
+            />
+          </Column>
+        </Row>
+        <Row>
+          <Column padding="0 30px 30px 30px">
+            <label>Nome do produto</label>
+            <Input type="text" placeholder="Digite o nome do produto" />
+          </Column>
+        </Row>
       </FormContainer>
     </Container>
   );
 }
+
+Form.propTypes = {
+  history: PropTypes.shape().isRequired,
+};

@@ -16,35 +16,6 @@ export const Container = styled.div`
       display: flex;
       flex-direction: row;
 
-      button {
-        display: flex;
-        align-items: center;
-        padding-top: 5px;
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-bottom: 5px;
-        background: #7d40e7 0% 0% no-repeat padding-box;
-        color: #fff;
-        border-radius: 4px;
-        border: 1px solid #eee;
-
-        svg {
-          vertical-align: middle;
-        }
-
-        span {
-          text-transform: uppercase;
-          font-size: 12px;
-          font-weight: bold;
-          margin-top: 2px;
-        }
-      }
-
-      button:disabled {
-        background: #cccccc 0% 0% no-repeat padding-box;
-        color: #ffffff;
-      }
-
       button:first-child {
         padding-right: 20px;
       }
@@ -66,7 +37,49 @@ export const Container = styled.div`
 
 export const FormContainer = styled.form`
   margin-top: 20px;
-  padding: 30px;
   background: #ffffff 0% 0% no-repeat padding-box;
   border-radius: 4px;
+`;
+
+export const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+`;
+
+export const Column = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: ${(props) => (props.padding ? props.padding : '30px')};
+
+  label {
+    text-align: left;
+    letter-spacing: 0px;
+    color: #444444;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  &:nth-child(even) {
+    padding-left: 0px;
+  }
+`;
+
+export const Input = styled.input.attrs((props) => ({
+  placeholder: props.placeholder,
+}))`
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  padding: 15px;
+  color: #999999;
+
+  &::placeholder {
+    text-align: left;
+    letter-spacing: 0px;
+    color: #999999;
+    opacity: 1;
+  }
 `;
