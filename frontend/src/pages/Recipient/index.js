@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MdAdd, MdMoreHoriz, MdDeleteForever, MdCreate } from 'react-icons/md';
 
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import api from '~/services/api';
 
 import { Container } from './styles';
@@ -14,7 +15,7 @@ import SearchInput from '~/components/ActionList/SearchInput';
 import ActionList from '~/components/ActionList';
 import Table from '~/components/Table';
 
-export default function Deliveryman() {
+export default function Recipient({ history }) {
   return (
     <Container>
       <header>
@@ -24,7 +25,7 @@ export default function Deliveryman() {
       <ActionList>
         <SearchInput placeholder="Buscar por destinatários" />
 
-        <button type="button">
+        <button type="button" onClick={() => history.push('/recipient/create')}>
           <MdAdd size={24} color="#fff" />
           <span>Cadastrar</span>
         </button>
@@ -68,3 +69,7 @@ export default function Deliveryman() {
     </Container>
   );
 }
+
+Recipient.propTypes = {
+  history: PropTypes.shape().isRequired,
+};
