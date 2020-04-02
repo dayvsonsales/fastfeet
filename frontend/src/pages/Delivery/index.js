@@ -10,6 +10,8 @@ import {
 
 import { Link } from 'react-router-dom';
 
+import PropTypes from 'prop-types';
+
 import api from '~/services/api';
 
 import {
@@ -32,7 +34,7 @@ import { Dropdown, DropdownContent } from '~/components/Dropdown/styles';
 import image from '~/assets/Image 1.png';
 import SearchInput from '~/components/ActionList/SearchInput';
 
-export default function Delivery() {
+export default function Delivery({ history }) {
   const refModal = useRef(null);
   const [show, setShow] = useState(false);
 
@@ -48,7 +50,10 @@ export default function Delivery() {
         </header>
         <ActionList>
           <SearchInput placeholder="Buscar por encomendas" />
-          <button type="button">
+          <button
+            type="button"
+            onClick={() => history.push('/delivery/create')}
+          >
             <MdAdd size={24} color="#fff" />
             <span>Cadastrar</span>
           </button>
@@ -161,3 +166,7 @@ export default function Delivery() {
     </>
   );
 }
+
+Delivery.propTypes = {
+  history: PropTypes.shape().isRequired,
+};
