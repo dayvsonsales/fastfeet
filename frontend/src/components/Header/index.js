@@ -4,10 +4,16 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Container, Content, Profile } from './styles';
 
+import { persistor } from '~/store';
+
 import logo from '~/assets/logo.png';
 
 export default function Header() {
   const profile = useSelector((state) => state.user.profile);
+
+  function handleLogout() {
+    persistor.purge().then(window.location.reload());
+  }
 
   return (
     <Container>
@@ -33,7 +39,9 @@ export default function Header() {
           <Profile>
             <div>
               <strong>{profile.name}</strong>
-              <NavLink to="/profile">sair do sistema</NavLink>
+              <a href="#logout" onClick={() => handleLogout()}>
+                sair do sistema
+              </a>
             </div>
           </Profile>
         </aside>
