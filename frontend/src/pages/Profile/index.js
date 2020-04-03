@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Form, Input } from '@rocketseat/unform';
+import { Form } from '@unform/web';
 import { useSelector, useDispatch } from 'react-redux';
 import AvatarInput from '~/pages/Deliveryman/Form/AvatarInput';
 
@@ -8,6 +8,7 @@ import { Container } from './styles';
 import { persistor } from '~/store';
 
 import { updateProfileRequest } from '~/store/modules/user/action';
+import Input from '~/components/Input';
 
 export default function Profile() {
   const dispatch = useDispatch();
