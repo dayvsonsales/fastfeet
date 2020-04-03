@@ -35,4 +35,9 @@ export default createGlobalStyle`
    button {
      cursor: pointer;
    }
+
+   .error {
+    color: red;
+    margin-top: 2px;
+   }
 `;
