@@ -42,6 +42,12 @@ export default function Routes() {
             />
             <Route
               exact
+              path="/delivery/edit/:id"
+              component={DeliveryForm}
+              isPrivate
+            />
+            <Route
+              exact
               path="/deliveryman"
               component={Deliveryman}
               isPrivate
