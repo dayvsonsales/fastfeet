@@ -11,7 +11,7 @@ import NewDeliveryMail from '../jobs/NewDeliveryMail';
 class DeliveryController {
   async index(req, res) {
     const { page = 1 } = req.query;
-    const { q = '' } = req.query;
+    const { q = '', id } = req.query;
 
     const deliveries = await Delivery.findAndCountAll({
       offset: page - 1,
@@ -34,6 +34,9 @@ class DeliveryController {
       where: {
         product: {
           [Op.iLike]: `%${q}%`,
+        },
+        id: id || {
+          [Op.ne]: null,
         },
       },
       order: [['id', 'asc']],
@@ -89,7 +92,7 @@ class DeliveryController {
       req.body.end_date = new Date();
     }
 
-    const delivery = Delivery.findByPk(req.params.id);
+    const delivery = await Delivery.findByPk(req.params.id);
 
     const data = await delivery.update(req.body);
 
