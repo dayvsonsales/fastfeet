@@ -12,6 +12,8 @@ import { Link } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 
+import { format, parseISO } from 'date-fns';
+import { toast } from 'react-toastify';
 import api from '~/services/api';
 
 import {
@@ -93,6 +95,15 @@ export default function Delivery({ history }) {
       delivery.deliveryman.slug = generateSlug(name);
       delivery.type = type(delivery);
 
+      delivery.start_date =
+        delivery.start_date &&
+        format(parseISO(delivery.start_date), 'dd/MM/yyyy');
+      delivery.canceled_at =
+        delivery.canceled_at &&
+        format(parseISO(delivery.canceled_at), 'dd/MM/yyyy');
+      delivery.end_date =
+        delivery.end_date && format(parseISO(delivery.end_date), 'dd/MM/yyyy');
+
       return {
         ...delivery,
         deliveryman: {
@@ -107,6 +118,24 @@ export default function Delivery({ history }) {
   useEffect(() => {
     loadDeliveries();
   }, [product]);
+
+  async function handleDelete({ id }) {
+    if (
+      window.confirm('Se você remover, não poderá mais recuperar. Tem certeza?')
+    ) {
+      try {
+        await api.delete(`delivery/${id}`);
+
+        setDeliveries(deliveries.filter((d) => d.id !== id));
+
+        toast.success('Removido com sucesso!');
+      } catch (e) {
+        toast.error(
+          'Ocorreu um erro ao remover encomenda. Tente novamente mais tarde'
+        );
+      }
+    }
+  }
 
   return (
     <>
@@ -171,14 +200,14 @@ export default function Delivery({ history }) {
                         <MdVisibility size={10} color="#8E5BE8" />
                         Visualizar
                       </a>
-                      <Link to="/edit">
+                      <Link to={`/delivery/edit/${delivery.id}`}>
                         <MdCreate size={10} color="#4D85EE" />
                         Editar
                       </Link>
-                      <Link to="/delete">
+                      <a href="#delete" onClick={() => handleDelete(delivery)}>
                         <MdDeleteForever size={10} color="#DE3B3B" />
                         Excluir
-                      </Link>
+                      </a>
                     </DropdownContent>
                   </Dropdown>
                 </td>
