@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-import { useField } from '@rocketseat/unform';
+import { useField } from '@unform/core';
 import { MdInsertPhoto } from 'react-icons/md';
 import api from '~/services/api';
 
