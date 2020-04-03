@@ -5,11 +5,11 @@ class DeliveryProblemController {
   async index(req, res) {
     const { page = 1 } = req.query;
 
-    const deliveries = await Delivery.findAndCountAll({
+    const deliveries = await DeliveryProblem.findAndCountAll({
       include: [
         {
-          model: DeliveryProblem,
-          as: 'delivery_problem',
+          model: Delivery,
+          as: 'delivery',
           required: true,
         },
       ],
