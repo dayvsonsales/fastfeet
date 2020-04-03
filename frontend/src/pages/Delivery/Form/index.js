@@ -1,21 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { MdDone, MdKeyboardArrowLeft } from 'react-icons/md';
-import Select from 'react-select';
+
+import AsyncSelect from 'react-select/async';
+
 import { useLocation, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Container, FormContainer, Row, Column, Input } from './styles';
 import Button from '~/components/Button';
-
-import ActionList from '~/components/ActionList';
-
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
+import api from '~/services/api';
 
 export default function Form({ history }) {
+  const [recipients, setRecipients] = useState('');
+  const [deliverymen, setDeliverymen] = useState('');
+
   const location = useLocation();
   const { id } = useParams();
 
@@ -23,6 +21,28 @@ export default function Form({ history }) {
     location.pathname.indexOf('edit') > -1
       ? 'Edição de encomendas'
       : 'Cadastro de encomendas';
+
+  function handleRecipientChange(input, callback) {
+    api.get(`/recipients?q=${input}`).then((response) => {
+      const options = response.data.rows.map((recipient) => ({
+        value: recipient.id,
+        label: recipient.name,
+      }));
+
+      callback(options);
+    });
+  }
+
+  function handleDeliverymanChange(input, callback) {
+    api.get(`/deliveryman?q=${input}`).then((response) => {
+      const options = response.data.rows.map((deliveryman) => ({
+        value: deliveryman.id,
+        label: deliveryman.name,
+      }));
+
+      callback(options);
+    });
+  }
 
   return (
     <Container>
@@ -44,9 +64,12 @@ export default function Form({ history }) {
         <Row>
           <Column>
             <label>Destinatário</label>
-            <Select
-              id="recipient"
-              options={options}
+            <AsyncSelect
+              cacheOptions
+              loadOptions={(input, callback) =>
+                handleRecipientChange(input, callback)
+              }
+              defaultOptions
               components={{
                 IndicatorSeparator: () => null,
               }}
@@ -55,9 +78,12 @@ export default function Form({ history }) {
 
           <Column>
             <label>Entregador</label>
-            <Select
-              id="deliveryman"
-              options={options}
+            <AsyncSelect
+              cacheOptions
+              loadOptions={(input, callback) =>
+                handleDeliverymanChange(input, callback)
+              }
+              defaultOptions
               components={{
                 IndicatorSeparator: () => null,
               }}
