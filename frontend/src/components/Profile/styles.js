@@ -10,6 +10,7 @@ export const Container = styled.div`
     padding: 8px;
     background: #f4effc 0% 0% no-repeat padding-box;
     margin-right: 5px;
+    text-transform: uppercase;
   }
 
   img {
