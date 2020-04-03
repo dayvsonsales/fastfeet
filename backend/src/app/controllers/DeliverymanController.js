@@ -5,11 +5,11 @@ import Deliveryman from '../models/Deliveryman';
 class DeliverymanController {
   async index(req, res) {
     const { page } = req.query;
-    const { q } = req.query;
+    const { q = '' } = req.query;
 
-    const data = await Deliveryman.findAll({
+    const data = await Deliveryman.findAndCountAll({
       offset: (page || 1) - 1,
-      limit: 30,
+      limit: 5,
       where: {
         name: {
           [Op.iLike]: `%${q}%`,

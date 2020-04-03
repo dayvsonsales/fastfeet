@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 import { Op } from 'sequelize';
 import Delivery from '../models/Delivery';
+import File from '../models/File';
 import Recipient from '../models/Recipient';
 import Deliveryman from '../models/Deliveryman';
 import Queue from '../../lib/Queue';
@@ -10,16 +11,32 @@ import NewDeliveryMail from '../jobs/NewDeliveryMail';
 class DeliveryController {
   async index(req, res) {
     const { page = 1 } = req.query;
-    const { q } = req.query;
+    const { q = '' } = req.query;
 
     const deliveries = await Delivery.findAndCountAll({
       offset: page - 1,
       limit: 30,
+      include: [
+        {
+          model: Recipient,
+          as: 'recipient',
+        },
+        {
+          model: Deliveryman,
+          as: 'deliveryman',
+          include: [{ model: File, as: 'avatar' }],
+        },
+        {
+          model: File,
+          as: 'signature',
+        },
+      ],
       where: {
         product: {
           [Op.iLike]: `%${q}%`,
         },
       },
+      order: [['id', 'asc']],
     });
 
     return res.json(deliveries);

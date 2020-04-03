@@ -5,11 +5,11 @@ import Recipient from '../models/Recipient';
 class RecipientController {
   async index(req, res) {
     const { page = 1 } = req.query;
-    const { q } = req.query;
+    const { q = '' } = req.query;
 
-    const deliveries = await Recipient.findAndCountAll({
+    const recipient = await Recipient.findAndCountAll({
       offset: page - 1,
-      limit: 30,
+      limit: 5,
       where: {
         name: {
           [Op.iLike]: `%${q}%`,
@@ -17,7 +17,7 @@ class RecipientController {
       },
     });
 
-    return res.json(deliveries);
+    return res.json(recipient);
   }
 
   async store(req, res) {
@@ -42,13 +42,13 @@ class RecipientController {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      street: Yup.string().required(),
-      number: Yup.number().required(),
+      name: Yup.string(),
+      street: Yup.string(),
+      number: Yup.number(),
       address_line: Yup.string(),
-      state: Yup.string().required(),
-      city: Yup.string().required(),
-      zip_code: Yup.string().required(),
+      state: Yup.string(),
+      city: Yup.string(),
+      zip_code: Yup.string(),
     });
 
     if (!(await schema.isValid(req.body))) {
