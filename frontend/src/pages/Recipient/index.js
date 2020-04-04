@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { MdAdd, MdMoreHoriz, MdDeleteForever, MdCreate } from 'react-icons/md';
 
@@ -9,42 +9,30 @@ import api from '~/services/api';
 
 import { Container } from './styles';
 
-import DeliveryStatus from '~/components/DeliveryStatus';
 import { Dropdown, DropdownContent } from '~/components/Dropdown/styles';
 
 import SearchInput from '~/components/ActionList/SearchInput';
 import ActionList from '~/components/ActionList';
 import Table from '~/components/Table';
-import { generateSlug } from '~/utils/helper';
+
+import Paginator from '~/components/Paginator';
 
 export default function Recipient({ history }) {
   const [recipients, setRecipients] = useState([]);
   const [name, setName] = useState('');
 
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+
   function handleSearch(_name) {
     setName(_name);
   }
 
-  async function handleDelete({ id }) {
-    if (
-      window.confirm('Se você remover, não poderá mais recuperar. Tem certeza?')
-    ) {
-      try {
-        await api.delete(`recipients/${id}`);
+  async function loadRecipients(_page = 1) {
+    const response = await api.get(`/recipients?page=${_page}&q=${name}`);
 
-        setRecipients(recipients.filter((d) => d.id !== id));
-
-        toast.success('Removido com sucesso!');
-      } catch (e) {
-        toast.error(
-          'Ocorreu um erro ao remover entregador. Tente novamente mais tarde'
-        );
-      }
-    }
-  }
-
-  async function loadDeliverymen(page = 1) {
-    const response = await api.get(`/recipients?page=${page}&q=${name}`);
+    setTotal(response.data.count);
+    setPage(_page);
 
     const data = response.data.rows.map((recipient) => ({
       ...recipient,
@@ -56,8 +44,35 @@ export default function Recipient({ history }) {
     setRecipients(data);
   }
 
+  async function handleDelete({ id }) {
+    if (
+      window.confirm('Se você remover, não poderá mais recuperar. Tem certeza?')
+    ) {
+      try {
+        await api.delete(`recipients/${id}`);
+
+        const data = recipients.filter((d) => d.id !== id);
+
+        setRecipients(data);
+        setTotal(data.length);
+
+        if (data.length === 0) {
+          loadRecipients(page - 1);
+        } else {
+          loadRecipients(page);
+        }
+
+        toast.success('Removido com sucesso!');
+      } catch (e) {
+        toast.error(
+          'Ocorreu um erro ao remover entregador. Tente novamente mais tarde'
+        );
+      }
+    }
+  }
+
   useEffect(() => {
-    loadDeliverymen();
+    loadRecipients();
   }, [name]);
 
   return (
@@ -113,6 +128,13 @@ export default function Recipient({ history }) {
           ))}
         </tbody>
       </Table>
+
+      <Paginator
+        limit={5}
+        page={page}
+        total={total}
+        handlePaginator={loadRecipients}
+      />
     </Container>
   );
 }

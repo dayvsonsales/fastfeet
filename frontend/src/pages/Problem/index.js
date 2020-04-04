@@ -12,12 +12,17 @@ import { Dropdown, DropdownContent } from '~/components/Dropdown/styles';
 import Modal from '~/components/Modal';
 import Table from '~/components/Table';
 
+import Paginator from '~/components/Paginator';
+
 export default function Problem() {
   const refModal = useRef(null);
   const [show, setShow] = useState(false);
 
   const [deliveriesProblems, setDeliveryProblems] = useState([]);
   const [currentProblem, setCurrentProblem] = useState();
+
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
 
   function handleModal(deliveryProblem) {
     setCurrentProblem(deliveryProblem);
@@ -26,6 +31,15 @@ export default function Problem() {
 
   function handleClickOutside() {
     setShow(false);
+  }
+
+  async function loadDeliveryProblems(_page = 1) {
+    const response = await api.get(`delivery-problems?page=${_page}`);
+
+    setTotal(response.data.count);
+    setPage(_page);
+
+    setDeliveryProblems(response.data.rows);
   }
 
   async function handleCancel({ id }) {
@@ -49,12 +63,6 @@ export default function Problem() {
   }
 
   useEffect(() => {
-    async function loadDeliveryProblems() {
-      const response = await api.get('delivery-problems');
-
-      setDeliveryProblems(response.data.rows);
-    }
-
     loadDeliveryProblems();
   }, []);
 
@@ -117,6 +125,12 @@ export default function Problem() {
             ))}
           </tbody>
         </Table>
+        <Paginator
+          limit={5}
+          page={page}
+          total={total}
+          handlePaginator={loadDeliveryProblems}
+        />
       </Container>
 
       <Modal ref={refModal} show={show} onClickOutside={handleClickOutside}>

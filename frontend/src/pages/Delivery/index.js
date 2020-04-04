@@ -37,12 +37,17 @@ import SearchInput from '~/components/ActionList/SearchInput';
 
 import { generateSlug, type } from '~/utils/helper';
 
+import Paginator from '~/components/Paginator';
+
 export default function Delivery({ history }) {
   const refModal = useRef(null);
   const [show, setShow] = useState(false);
   const [deliveries, setDeliveries] = useState([]);
   const [currentDelivery, setCurrentDelivery] = useState(null);
   const [product, setProduct] = useState('');
+
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
 
   function handleSearch(_product) {
     console.tron.log(product);
@@ -58,8 +63,11 @@ export default function Delivery({ history }) {
     setShow(false);
   }
 
-  async function loadDeliveries(page = 1) {
-    const response = await api.get(`/delivery?page=${page}&q=${product}`);
+  async function loadDeliveries(_page = 1) {
+    const response = await api.get(`/delivery?page=${_page}&q=${product}`);
+
+    setTotal(response.data.count);
+    setPage(_page);
 
     const data = response.data.rows.map((delivery) => {
       const { name } = delivery.deliveryman;
@@ -94,7 +102,16 @@ export default function Delivery({ history }) {
       try {
         await api.delete(`delivery/${id}`);
 
-        setDeliveries(deliveries.filter((d) => d.id !== id));
+        const data = deliveries.filter((d) => d.id !== id);
+
+        setDeliveries(data);
+        setTotal(data.length);
+
+        if (data.length === 0) {
+          loadDeliveries(page - 1);
+        } else {
+          loadDeliveries(page);
+        }
 
         toast.success('Removido com sucesso!');
       } catch (e) {
@@ -176,13 +193,10 @@ export default function Delivery({ history }) {
                         <MdCreate size={10} color="#4D85EE" />
                         Editar
                       </Link>
-                      <Link
-                        href="#delete"
-                        onClick={() => handleDelete(delivery)}
-                      >
+                      <a href="#delete" onClick={() => handleDelete(delivery)}>
                         <MdDeleteForever size={10} color="#DE3B3B" />
                         Excluir
-                      </Link>
+                      </a>
                     </DropdownContent>
                   </Dropdown>
                 </td>
@@ -190,6 +204,12 @@ export default function Delivery({ history }) {
             ))}
           </tbody>
         </Table>
+        <Paginator
+          limit={5}
+          page={page}
+          total={total}
+          handlePaginator={loadDeliveries}
+        />
       </Container>
 
       <Modal ref={refModal} show={show} onClickOutside={handleClickOutside}>
