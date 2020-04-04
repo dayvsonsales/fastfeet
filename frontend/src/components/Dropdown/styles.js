@@ -6,18 +6,24 @@ export const Dropdown = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  white-space: nowrap;
 
   &:hover {
     .dropdown-content {
       display: flex;
       position: absolute;
-      margin-top: 75px;
+
+      /* margin-top: 75px;
 
       @-moz-document url-prefix() {
         & {
           margin-top: 150px;
         }
-      }
+      } */
+
+      top: calc(100% + 5px);
 
       &::before {
         content: '';
@@ -41,10 +47,12 @@ export const DropdownContent = styled.div.attrs({
 })`
   display: none;
   flex-direction: column;
+  position: absolute;
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 0px 2px #00000026;
-  padding: 15px 10px 15px 10px;
+  padding: 15px 15px 15px 15px;
   min-width: 120px;
+  z-index: 1;
 
   border-radius: 4px;
 
