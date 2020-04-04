@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: row;
-  min-width: 237px;
+  min-width: 250px;
   border-radius: 4px;
   border: 1px solid #dddddd;
   background: #ffffff 0% 0% no-repeat padding-box;
