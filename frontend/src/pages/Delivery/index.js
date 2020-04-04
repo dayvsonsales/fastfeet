@@ -35,6 +35,8 @@ import { Dropdown, DropdownContent } from '~/components/Dropdown/styles';
 
 import SearchInput from '~/components/ActionList/SearchInput';
 
+import { generateSlug, type } from '~/utils/helper';
+
 export default function Delivery({ history }) {
   const refModal = useRef(null);
   const [show, setShow] = useState(false);
@@ -54,36 +56,6 @@ export default function Delivery({ history }) {
 
   function handleClickOutside() {
     setShow(false);
-  }
-
-  function generateSlug(name) {
-    const split = name.split(' ');
-
-    let slug;
-
-    if (split.length > 1) {
-      slug = `${split[0].substring(0, 1)}${split[1].substring(0, 1)}`;
-    } else {
-      slug = `${split[0].substring(0, 1)}${split[0].substring(1, 2)}`;
-    }
-
-    return slug;
-  }
-
-  function type(delivery) {
-    if (delivery.canceled_at) {
-      return 'canceled';
-    }
-
-    if (delivery.end_date) {
-      return 'delivered';
-    }
-
-    if (delivery.start_date) {
-      return 'ready';
-    }
-
-    return 'pending';
   }
 
   async function loadDeliveries(page = 1) {
@@ -115,10 +87,6 @@ export default function Delivery({ history }) {
     setDeliveries(data);
   }
 
-  useEffect(() => {
-    loadDeliveries();
-  }, [product]);
-
   async function handleDelete({ id }) {
     if (
       window.confirm('Se você remover, não poderá mais recuperar. Tem certeza?')
@@ -136,6 +104,10 @@ export default function Delivery({ history }) {
       }
     }
   }
+
+  useEffect(() => {
+    loadDeliveries();
+  }, [product]);
 
   return (
     <>
@@ -204,10 +176,13 @@ export default function Delivery({ history }) {
                         <MdCreate size={10} color="#4D85EE" />
                         Editar
                       </Link>
-                      <a href="#delete" onClick={() => handleDelete(delivery)}>
+                      <Link
+                        href="#delete"
+                        onClick={() => handleDelete(delivery)}
+                      >
                         <MdDeleteForever size={10} color="#DE3B3B" />
                         Excluir
-                      </a>
+                      </Link>
                     </DropdownContent>
                   </Dropdown>
                 </td>
