@@ -2,17 +2,28 @@ import * as yup from 'yup';
 import { Op } from 'sequelize';
 import Deliveryman from '../models/Deliveryman';
 
+import File from '../models/File';
+
 class DeliverymanController {
   async index(req, res) {
     const { page } = req.query;
-    const { q = '' } = req.query;
+    const { q = '', id } = req.query;
 
     const data = await Deliveryman.findAndCountAll({
       offset: (page || 1) - 1,
       limit: 5,
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+        },
+      ],
       where: {
         name: {
           [Op.iLike]: `%${q}%`,
+        },
+        id: id || {
+          [Op.ne]: null,
         },
       },
     });
@@ -85,13 +96,9 @@ class DeliverymanController {
       return res.status(404).send({ error: 'Deliveryman not exists' });
     }
 
-    const data = await Deliveryman.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
+    await deliveryman.destroy();
 
-    return res.send(data);
+    return res.json({ message: 'Deleted' });
   }
 }
 
