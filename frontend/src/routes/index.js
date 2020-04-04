@@ -7,7 +7,6 @@ import Route from './Route';
 
 import history from '~/services/history';
 import SignIn from '~/pages/SignIn';
-import Profile from '~/pages/Profile';
 import Delivery from '~/pages/Delivery';
 import Deliveryman from '~/pages/Deliveryman';
 import Problem from '~/pages/Problem';
@@ -78,7 +77,6 @@ export default function Routes() {
               isPrivate
             />
             <Route path="/problem" component={Problem} isPrivate />
-            <Route path="/profile" component={Profile} isPrivate />
           </Switch>
         </Router>
       </PersistGate>
