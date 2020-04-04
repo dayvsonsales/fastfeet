@@ -43,6 +43,8 @@ export default function Form({ history }) {
 
       if (!id) {
         await api.post('deliveryman', data);
+
+        reset();
       } else {
         await api.put(`deliveryman/${id}`, data);
       }
@@ -103,10 +105,7 @@ export default function Form({ history }) {
         <section>
           <Row>
             <Column padding="30px 30px 0px 30px">
-              <AvatarInput
-                name="avatar_id"
-                url={deliveryman ? deliveryman.avatar.url : null}
-              />
+              <AvatarInput name="avatar_id" />
             </Column>
           </Row>
           <Row>
