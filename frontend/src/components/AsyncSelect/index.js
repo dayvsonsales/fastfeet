@@ -3,6 +3,8 @@ import React, { useRef, useEffect } from 'react';
 import { useField } from '@unform/core';
 import Select from 'react-select/async';
 
+import PropTypes from 'prop-types';
+
 export default function AsyncSelect({ name, loadOptions, ...rest }) {
   const selectRef = useRef(null);
   const { fieldName, defaultValue, registerField, error } = useField(name);
@@ -46,3 +48,8 @@ export default function AsyncSelect({ name, loadOptions, ...rest }) {
     </>
   );
 }
+
+AsyncSelect.propTypes = {
+  name: PropTypes.string.isRequired,
+  loadOptions: PropTypes.func.isRequired,
+};
