@@ -14,5 +14,5 @@ export default function DefaultLayout({ children }) {
 }
 
 DefaultLayout.propTypes = {
-  children: PropTypes.instanceOf(Array).isRequired,
+  children: PropTypes.instanceOf(Object).isRequired,
 };
