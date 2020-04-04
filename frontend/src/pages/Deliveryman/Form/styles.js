@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
@@ -33,12 +33,27 @@ export const Container = styled.div`
       color: #444444;
     }
   }
-`;
 
-export const FormContainer = styled.form`
-  margin-top: 20px;
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border-radius: 4px;
+  section {
+    margin-top: 20px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border-radius: 4px;
+  }
+
+  input {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    padding: 15px;
+    color: #999999;
+
+    &::placeholder {
+      text-align: left;
+      letter-spacing: 0px;
+      color: #999999;
+      opacity: 1;
+    }
+  }
 `;
 
 export const Row = styled.div`
@@ -64,22 +79,5 @@ export const Column = styled.div`
 
   &:nth-child(even) {
     padding-left: 0px;
-  }
-`;
-
-export const Input = styled.input.attrs((props) => ({
-  placeholder: props.placeholder,
-}))`
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border: 1px solid #dddddd;
-  border-radius: 4px;
-  padding: 15px;
-  color: #999999;
-
-  &::placeholder {
-    text-align: left;
-    letter-spacing: 0px;
-    color: #999999;
-    opacity: 1;
   }
 `;
