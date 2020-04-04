@@ -33,26 +33,49 @@ export const Container = styled.div`
       color: #444444;
     }
   }
+
+  section {
+    margin-top: 20px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border-radius: 4px;
+  }
+
+  input {
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    padding: 15px;
+    color: #999999;
+
+    &::placeholder {
+      text-align: left;
+      letter-spacing: 0px;
+      color: #999999;
+      opacity: 1;
+    }
+  }
+
+  .row:nth-child(even) {
+    margin-top: -30px;
+    margin-bottom: -30px;
+  }
 `;
 
-export const FormContainer = styled.form`
-  margin-top: 20px;
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border-radius: 4px;
-`;
-
-export const Row = styled.div`
+export const Row = styled.div.attrs({
+  className: 'row',
+})`
   display: flex;
   flex-direction: row;
   width: 100%;
 `;
 
 export const Column = styled.div`
-  width: 100%;
+  width: ${(props) => (props.width ? props.width : '100%')};
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: ${(props) => (props.padding ? props.padding : '30px')};
+  padding: ${(props) => (props.padding ? props.padding : '30px')}
+    ${(props) => props.important && '!important'};
 
   label {
     text-align: left;
@@ -64,22 +87,10 @@ export const Column = styled.div`
 
   &:nth-child(even) {
     padding-left: 0px;
+    padding-right: 0px;
   }
-`;
 
-export const Input = styled.input.attrs((props) => ({
-  placeholder: props.placeholder,
-}))`
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border: 1px solid #dddddd;
-  border-radius: 4px;
-  padding: 15px;
-  color: #999999;
-
-  &::placeholder {
-    text-align: left;
-    letter-spacing: 0px;
-    color: #999999;
-    opacity: 1;
+  &:last-child {
+    padding-right: 30px;
   }
 `;
