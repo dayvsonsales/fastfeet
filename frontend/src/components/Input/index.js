@@ -12,9 +12,7 @@ export default function Input({ name, ...rest }) {
   useEffect(() => {
     registerField({
       name: fieldName,
-
       ref: inputRef.current,
-
       path: 'value',
     });
   }, [fieldName, registerField]);
