@@ -5,7 +5,7 @@ import Recipient from '../models/Recipient';
 class RecipientController {
   async index(req, res) {
     const { page = 1 } = req.query;
-    const { q = '' } = req.query;
+    const { q = '', id } = req.query;
 
     const recipient = await Recipient.findAndCountAll({
       offset: page - 1,
@@ -13,6 +13,9 @@ class RecipientController {
       where: {
         name: {
           [Op.iLike]: `%${q}%`,
+        },
+        id: id || {
+          [Op.ne]: null,
         },
       },
     });
