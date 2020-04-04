@@ -38,6 +38,6 @@ export default createGlobalStyle`
 
    .error {
     color: red;
-    margin-top: 2px;
+    margin-top: 5px;
    }
 `;
