@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
-export const Table = styled.table`
+export const Table = styled.table.attrs({
+  border: 0,
+})`
   margin-top: 15px;
   width: 100%;
   overflow: scroll;
   border-collapse: separate;
-  border-spacing: 0 15px;
+  border-spacing: 0 20px;
 
   thead > tr > th {
     font-weight: bold;
@@ -18,19 +20,24 @@ export const Table = styled.table`
   }
 
   tbody {
-    box-shadow: 0 0 0 1px #fff;
     border-radius: 4px;
     background: #fff;
+    border-left: 0;
+    border-right: 0;
   }
 
   tbody td {
-    padding: 15px;
+    box-shadow: 0 0 0 2px #fff;
+    padding: 10px;
+    padding-left: 15px;
     text-overflow: ellipsis;
     word-break: break-all;
     color: #666666;
+
+    border-radius: 4px;
   }
 `;
 
 export const Container = styled.div`
-  overflow-x: auto;
+  overflow-x: inherit;
 `;
