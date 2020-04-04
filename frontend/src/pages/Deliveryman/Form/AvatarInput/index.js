@@ -6,24 +6,27 @@ import api from '~/services/api';
 
 import { Container } from './styles';
 
-export default function AvatarInput({ name, url }) {
-  const { defaultValue, registerField, fieldName } = useField(name);
+export default function AvatarInput({ name, ...rest }) {
+  const { defaultValue, registerField, fieldName } = useField('avatar');
   const [file, setFile] = useState(defaultValue && defaultValue.id);
-  const [preview, setPreview] = useState(
-    (defaultValue && defaultValue.url) || url
-  );
+  const [preview, setPreview] = useState(defaultValue && defaultValue.url);
 
-  const ref = useRef();
+  const avatarRef = useRef(null);
 
   useEffect(() => {
-    if (ref.current) {
-      registerField({
-        name: fieldName,
-        ref: ref.current,
-        path: 'dataset.avatar', // ele não explica na aula, mas este path é por onde o unform vai conseguir pegar a variável name, ou seja, será populado o name avatar_id pelo que houver no campo data-avatar
-      });
-    }
-  }, [ref, registerField]);
+    registerField({
+      name: 'avatar_id',
+      ref: avatarRef.current,
+      path: 'dataset.avatar',
+      clearValue(ref) {
+        ref.value = '';
+        setPreview(null);
+      },
+      setValue(_, value) {
+        setPreview(value);
+      },
+    });
+  }, [registerField, fieldName]);
 
   async function handleChange(e) {
     const data = new FormData();
@@ -41,8 +44,8 @@ export default function AvatarInput({ name, url }) {
   return (
     <Container>
       <label htmlFor={fieldName}>
-        {preview || url ? (
-          <img src={preview || url} alt="" />
+        {preview || (defaultValue && defaultValue.url) ? (
+          <img src={preview || (defaultValue && defaultValue.url)} alt="" />
         ) : (
           <div>
             <MdInsertPhoto color="#DDDDDD" size={40} />
@@ -52,11 +55,12 @@ export default function AvatarInput({ name, url }) {
 
         <input
           type="file"
-          id={fieldName}
+          id="avatar"
           accept="image/*"
           onChange={handleChange}
           data-avatar={file}
-          ref={ref}
+          ref={avatarRef}
+          {...rest}
         />
       </label>
     </Container>
