@@ -18,10 +18,13 @@ export const Container = styled.div`
 
 export const ModalContainer = styled.div`
   width: 450px;
-  height: 353px;
+  min-height: 353px;
+  max-height: 425px;
   border-radius: 4px;
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 0px 10px #00000033;
+
+  overflow: scroll;
 
   padding: 25px;
 
