@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { darken } from 'polished';
 
 export const Container = styled.div`
   display: flex;
@@ -8,8 +9,9 @@ export const Container = styled.div`
   div {
     border-radius: 50%;
     padding: 8px;
-    background: #f4effc 0% 0% no-repeat padding-box;
+    background: ${(props) => props.color} 0% 0% no-repeat padding-box;
     margin-right: 5px;
+    color: ${(props) => darken(0.5, props.color)};
     text-transform: uppercase;
   }
 
