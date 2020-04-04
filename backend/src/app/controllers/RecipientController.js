@@ -7,9 +7,11 @@ class RecipientController {
     const { page = 1 } = req.query;
     const { q = '', id } = req.query;
 
+    const limit = 5;
+
     const recipient = await Recipient.findAndCountAll({
-      offset: page - 1,
-      limit: 5,
+      offset: (page - 1) * limit,
+      limit,
       where: {
         name: {
           [Op.iLike]: `%${q}%`,

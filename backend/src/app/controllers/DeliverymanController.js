@@ -6,12 +6,14 @@ import File from '../models/File';
 
 class DeliverymanController {
   async index(req, res) {
-    const { page } = req.query;
+    const { page = 1 } = req.query;
     const { q = '', id } = req.query;
 
+    const limit = 5;
+
     const data = await Deliveryman.findAndCountAll({
-      offset: (page || 1) - 1,
-      limit: 5,
+      offset: (page - 1) * limit,
+      limit,
       include: [
         {
           model: File,

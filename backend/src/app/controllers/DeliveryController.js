@@ -13,9 +13,11 @@ class DeliveryController {
     const { page = 1 } = req.query;
     const { q = '', id } = req.query;
 
+    const limit = 5;
+
     const deliveries = await Delivery.findAndCountAll({
-      offset: page - 1,
-      limit: 30,
+      offset: (page - 1) * limit,
+      limit,
       include: [
         {
           model: Recipient,

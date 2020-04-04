@@ -5,6 +5,8 @@ class DeliveryProblemController {
   async index(req, res) {
     const { page = 1 } = req.query;
 
+    const limit = 5;
+
     const deliveries = await DeliveryProblem.findAndCountAll({
       include: [
         {
@@ -13,8 +15,8 @@ class DeliveryProblemController {
           required: true,
         },
       ],
-      offset: page - 1,
-      limit: 30,
+      offset: (page - 1) * limit,
+      limit,
     });
 
     return res.json(deliveries);
