@@ -12,7 +12,9 @@ export default function SearchInput({ placeholder, onChange, onEnter }) {
   document.addEventListener('keydown', (e) => {
     if (e.keyCode === 13 || e.key === 'Enter') {
       e.preventDefault();
-      onEnter(e.target.value);
+      if (onEnter) {
+        onEnter(e.target.value);
+      }
     }
   });
 
