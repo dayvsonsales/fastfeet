@@ -26,7 +26,20 @@ const upload = multer(multerConfig);
 
 routes.post('/sessions', SessionController.store);
 
+routes.post('/delivery/:id/start', StartDeliveryController.store);
+routes.post('/delivery/:id/finish', EndDeliveryController.store);
+
+routes.get('/deliveryman/:id/deliveries', OpenedDeliveryController.index);
+routes.get('/deliveryman/:id/deliveries/ended', EndedDeliveryController.index);
+
+routes.get('/delivery/:id/problems', ProblemController.index);
+routes.post('/delivery/:id/problems', ProblemController.store);
+
+routes.get('/delivery', DeliveryController.index);
+routes.get('/deliveryman', DeliverymanController.index);
+
 routes.use(authMiddleware);
+
 routes.post('/users', UserController.store);
 routes.put('/users', UserController.update);
 
@@ -34,26 +47,16 @@ routes.get('/recipients', RecipientController.index);
 routes.post('/recipients', RecipientController.store);
 routes.put('/recipients/:id', RecipientController.update);
 
-routes.get('/deliveryman', DeliverymanController.index);
 routes.post('/deliveryman', DeliverymanController.store);
 routes.put('/deliveryman/:id', DeliverymanController.update);
 routes.delete('/deliveryman/:id', DeliverymanController.delete);
 
-routes.post('/delivery/:id/start', StartDeliveryController.store);
-routes.post('/delivery/:id/finish', EndDeliveryController.store);
-
-routes.get('/deliveryman/:id/deliveries', OpenedDeliveryController.index);
-routes.get('/deliveryman/:id/deliveries/ended', EndedDeliveryController.index);
-
-routes.get('/delivery', DeliveryController.index);
 routes.post('/delivery', DeliveryController.store);
 routes.put('/delivery/:id', DeliveryController.update);
 routes.delete('/delivery/:id', DeliveryController.delete);
 
 routes.get('/delivery-problems', DeliveryProblemController.index);
 
-routes.get('/delivery/:id/problems', ProblemController.index);
-routes.post('/delivery/:id/problems', ProblemController.store);
 routes.delete('/problem/:id/cancel-delivery', CancelDeliveryController.delete);
 
 routes.post('/files', upload.single('file'), FileController.store);
