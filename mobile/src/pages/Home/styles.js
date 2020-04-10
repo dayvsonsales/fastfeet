@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 import styled, { css } from 'styled-components/native';
-import { RectButton } from 'react-native-gesture-handler';
+import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
 
 export const Container = styled.KeyboardAvoidingView.attrs({
   enabled: Platform.OS === 'ios',
@@ -12,9 +12,7 @@ export const Container = styled.KeyboardAvoidingView.attrs({
 
 export const List = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
-})`
-  margin: 30px;
-`;
+})``;
 
 export const ProfileContainer = styled.View`
   flex-direction: row;
@@ -51,6 +49,7 @@ export const Name = styled.Text.attrs({
 export const DeliveryContainer = styled.View`
   flex-direction: column;
   margin: 20px;
+  flex: 1;
 `;
 
 export const HeaderContainer = styled.View`
@@ -69,7 +68,7 @@ export const ChooseButtonContainer = styled.View`
   justify-content: space-around;
 `;
 
-export const ChooseButton = styled(RectButton)`
+export const ChooseButton = styled(TouchableOpacity)`
   border: 0;
   background: #fff;
   padding-left: 10px;
