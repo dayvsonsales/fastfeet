@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Image } from 'react-native';
 import { useSelector } from 'react-redux';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { parseISO, format } from 'date-fns';
 import Background from '~/components/Background';
 
 import {
@@ -42,24 +44,42 @@ import {
 
 import api from '~/services/api';
 
-function Home({ isFocused }) {
-  const [appointments, setAppointments] = useState([]);
+function Home({ isFocused, navigation }) {
+  const [deliveries, setDeliveries] = useState([]);
+  const [choosedPending, setChoosedPending] = useState(true);
+
   const user = useSelector((state) => state.user.profile);
 
-  const choosedPending = true;
+  async function loadDeliveries(type = 'opened') {
+    const response = await api.get(
+      `/deliveryman/${user.id}/deliveries/${type}`
+    );
 
-  async function loadAppointments() {
-    // const response = await api.get('/appointments');
-    // setAppointments(response.data);
+    console.tron.log('alo');
+
+    const data = response.data.rows.map((delivery) => ({
+      ...delivery,
+      formatted_date: format(parseISO(delivery.createdAt), 'dd/MM/yyyy'),
+    }));
+
+    setDeliveries(data);
+
+    if (type === 'opened') {
+      setChoosedPending(true);
+    } else {
+      setChoosedPending(false);
+    }
   }
 
   useEffect(() => {
     if (isFocused) {
-      // loadAppointments();
+      loadDeliveries();
     }
   }, [isFocused]);
 
-  async function handleCancel(id) {}
+  async function handleDetail(id) {
+    navigation.navigate('DeliveryDetails', { id });
+  }
 
   return (
     <Background>
@@ -79,74 +99,83 @@ function Home({ isFocused }) {
               <Name>{user.name}</Name>
             </Salute>
           </WelcomeContainer>
-          <Icon name="exit-to-app" color="#E74040" size={24} />
+          <TouchableOpacity>
+            <Icon name="exit-to-app" color="#E74040" size={24} />
+          </TouchableOpacity>
         </ProfileContainer>
-
         <DeliveryContainer>
           <HeaderContainer>
             <Title>Entregas</Title>
             <ChooseButtonContainer>
-              <ChooseButton>
+              <ChooseButton onClick={() => loadDeliveries()}>
                 <ChooseButtonText choosed={choosedPending}>
                   Pendentes
                 </ChooseButtonText>
               </ChooseButton>
-              <ChooseButton>
+              <ChooseButton onClick={() => loadDeliveries('ended')}>
                 <ChooseButtonText>Entregues</ChooseButtonText>
               </ChooseButton>
             </ChooseButtonContainer>
           </HeaderContainer>
 
-          <ListContainer>
-            <ItemContainer>
-              <HeaderItemContainer>
-                <Icon name="local-shipping" color="#7D40E7" size={24} />
-                <HeaderItemText>Encomenda 01</HeaderItemText>
-              </HeaderItemContainer>
-              <TimelineContainer>
-                <Time>
-                  <BallContainer>
-                    <InvisibleHorizontalLine first />
-                    <Ball active />
-                    <HorizontalLine first />
-                  </BallContainer>
-                  <TimeText>Aguardando Retirada</TimeText>
-                </Time>
+          <List
+            data={deliveries}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({ item }) => (
+              <ListContainer>
+                <ItemContainer>
+                  <HeaderItemContainer>
+                    <Icon name="local-shipping" color="#7D40E7" size={24} />
+                    <HeaderItemText>Encomenda {item.id}</HeaderItemText>
+                  </HeaderItemContainer>
+                  <TimelineContainer>
+                    <Time>
+                      <BallContainer>
+                        <InvisibleHorizontalLine first />
+                        <Ball active />
+                        <HorizontalLine first />
+                      </BallContainer>
+                      <TimeText>Aguardando Retirada</TimeText>
+                    </Time>
 
-                <Time>
-                  <BallContainer>
-                    <HorizontalLine second />
-                    <Ball />
-                    <HorizontalLine second />
-                  </BallContainer>
-                  <TimeText>Retirada</TimeText>
-                </Time>
-                <Time>
-                  <BallContainer>
-                    <HorizontalLine />
-                    <Ball />
-                    <InvisibleHorizontalLine />
-                  </BallContainer>
-                  <TimeText>Entregue</TimeText>
-                </Time>
-              </TimelineContainer>
-              <HeaderFooterContainer>
-                <InformationContainer>
-                  <DateLabelText>Data</DateLabelText>
-                  <DateText>15/01/2020</DateText>
-                </InformationContainer>
-                <InformationContainer>
-                  <DateLabelText>Cidade</DateLabelText>
-                  <DateText>Rio do Sul</DateText>
-                </InformationContainer>
-                <InformationContainer>
-                  <Details>
-                    <DetailsText>Ver detalhes</DetailsText>
-                  </Details>
-                </InformationContainer>
-              </HeaderFooterContainer>
-            </ItemContainer>
-          </ListContainer>
+                    <Time>
+                      <BallContainer>
+                        <HorizontalLine second />
+                        <Ball active={item.start_date} />
+                        <HorizontalLine second />
+                      </BallContainer>
+                      <TimeText>Retirada</TimeText>
+                    </Time>
+                    <Time>
+                      <BallContainer>
+                        <HorizontalLine />
+                        <Ball active={item.end_date} />
+                        <InvisibleHorizontalLine />
+                      </BallContainer>
+                      <TimeText>Entregue</TimeText>
+                    </Time>
+                  </TimelineContainer>
+                  <HeaderFooterContainer>
+                    <InformationContainer>
+                      <DateLabelText>Data</DateLabelText>
+                      <DateText>{item.formatted_date}</DateText>
+                    </InformationContainer>
+                    <InformationContainer>
+                      <DateLabelText>Cidade</DateLabelText>
+                      <DateText>{item.recipient.city}</DateText>
+                    </InformationContainer>
+                    <InformationContainer>
+                      <TouchableOpacity onPress={() => handleDetail(item.id)}>
+                        <Details>
+                          <DetailsText>Ver detalhes</DetailsText>
+                        </Details>
+                      </TouchableOpacity>
+                    </InformationContainer>
+                  </HeaderFooterContainer>
+                </ItemContainer>
+              </ListContainer>
+            )}
+          />
         </DeliveryContainer>
       </Container>
     </Background>
