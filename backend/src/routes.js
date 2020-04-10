@@ -29,13 +29,17 @@ routes.post('/sessions', SessionController.store);
 routes.post('/delivery/:id/start', StartDeliveryController.store);
 routes.post('/delivery/:id/finish', EndDeliveryController.store);
 
-routes.get('/deliveryman/:id/deliveries', OpenedDeliveryController.index);
+routes.get('/delivery', DeliveryController.index);
+
+routes.get(
+  '/deliveryman/:id/deliveries/opened',
+  OpenedDeliveryController.index
+);
 routes.get('/deliveryman/:id/deliveries/ended', EndedDeliveryController.index);
 
 routes.get('/delivery/:id/problems', ProblemController.index);
 routes.post('/delivery/:id/problems', ProblemController.store);
 
-routes.get('/delivery', DeliveryController.index);
 routes.get('/deliveryman', DeliverymanController.index);
 
 routes.use(authMiddleware);
