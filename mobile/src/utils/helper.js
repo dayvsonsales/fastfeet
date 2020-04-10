@@ -27,3 +27,21 @@ export function type(delivery) {
 
   return 'pending';
 }
+
+export function deliveryStatus(delivery) {
+  const deliveryType = type(delivery);
+
+  if (deliveryType === 'ready') {
+    return 'Pendente';
+  }
+
+  if (deliveryType === 'delivered') {
+    return 'Entregue';
+  }
+
+  if (deliveryType === 'canceled') {
+    return 'Cancelado';
+  }
+
+  return 'Aguardando retirada';
+}
