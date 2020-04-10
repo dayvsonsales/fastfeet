@@ -15,9 +15,11 @@ import Profile from './pages/Profile';
 import Login from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import NavigationService from './services/navigation/NavigationService';
-import Confirm from '~/pages/New/Confirm';
-import SelectDateTime from '~/pages/New/SelectDateTime';
-import SelectProvider from '~/pages/New/SelectProvider';
+
+import DeliveryConfirm from '~/pages/DeliveryConfirm';
+import ProblemDetails from '~/pages/ProblemDetails';
+import Problem from '~/pages/Problem';
+import DeliveryDetails from '~/pages/DeliveryDetails';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -40,7 +42,7 @@ const defaultStackNavigatorOptions = (navigation) => {
     },
     headerTitleStyle: {
       fontWeight: 'bold',
-      color: '#eee',
+      color: '#FFFFFF',
     },
     headerLeft: (props) => <HeaderLeft navigation={navigation} {...props} />,
   };
@@ -49,37 +51,51 @@ const defaultStackNavigatorOptions = (navigation) => {
 const HeaderLeft = ({ navigation }) => {
   return (
     <TouchableOpacity onPress={() => navigation.goBack()}>
-      <Icon name="chevron-left" size={20} color="#fff" />
+      <Icon name="chevron-left" size={24} color="#fff" />
     </TouchableOpacity>
   );
 };
 
-const NewStack = () => {
+const DeliveryStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="SelectProvider"
+      initialRouteName="Delivery"
       screenOptions={({ navigation }) =>
         defaultStackNavigatorOptions(navigation)
       }>
       <Stack.Screen
-        name="SelectProvider"
-        component={SelectProvider}
+        name="Delivery"
+        component={Home}
         options={{
-          title: 'Selecione o prestador',
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name="SelectDateTime"
-        component={SelectDateTime}
+        name="DeliveryDetails"
+        component={DeliveryDetails}
         options={{
-          title: 'Selecione o horário',
+          title: 'Detalhes da encomenda',
+        }}
+      />
+      <Stack.Screen
+        name="Problem"
+        component={Problem}
+        options={{
+          title: 'Informar problema',
+        }}
+      />
+      <Stack.Screen
+        name="ProblemDetails"
+        component={ProblemDetails}
+        options={{
+          title: 'Visualizar problemas',
         }}
       />
       <Stack.Screen
         name="Confirm"
-        component={Confirm}
+        component={DeliveryConfirm}
         options={{
-          title: 'Confirme',
+          title: 'Confirmar entrega',
         }}
       />
     </Stack.Navigator>
@@ -114,7 +130,7 @@ export default function Routes() {
           }}>
           <Tab.Screen
             name="Home"
-            component={Home}
+            component={DeliveryStack}
             options={{
               tabBarLabel: (props) => tabBarLabel(props, 'Entregas'),
               tabBarIcon: (props) => tabBarIcon(props, 'reorder'),
