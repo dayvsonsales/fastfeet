@@ -1,6 +1,7 @@
 import { Op } from 'sequelize';
 import Delivery from '../models/Delivery';
 import Deliveryman from '../models/Deliveryman';
+import Recipient from '../models/Recipient';
 
 class EndedDeliveryController {
   async index(req, res) {
@@ -17,6 +18,13 @@ class EndedDeliveryController {
           [Op.ne]: null,
         },
       },
+      include: [
+        {
+          model: Recipient,
+          as: 'recipient',
+          attributes: ['id', 'city'],
+        },
+      ],
     });
 
     return res.json(deliveries);
