@@ -10,7 +10,7 @@ export const Background = styled(LinearGradient).attrs({
 `;
 
 export const Container = styled.ScrollView`
-  margin-top: 90px;
+  margin-top: ${() => (Platform.OS === 'ios' ? '90px' : '80px')};
   padding: 20px;
 `;
 
