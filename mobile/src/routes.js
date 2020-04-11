@@ -1,7 +1,10 @@
 import React from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSelector } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -9,11 +12,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import PropTypes from 'prop-types';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Text } from 'react-native';
+import { Text, Platform } from 'react-native';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Login from './pages/SignIn';
-import SignUp from './pages/SignUp';
 import NavigationService from './services/navigation/NavigationService';
 
 import DeliveryConfirm from '~/pages/DeliveryConfirm';
@@ -41,10 +43,12 @@ const defaultStackNavigatorOptions = (navigation) => {
       marginLeft: 20,
     },
     headerTitleStyle: {
-      fontWeight: 'bold',
+      fontWeight: Platform.OS === 'ios' ? 'bold' : 'normal',
       color: '#FFFFFF',
     },
+    headerTitleAlign: 'center',
     headerLeft: (props) => <HeaderLeft navigation={navigation} {...props} />,
+    cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
   };
 };
 
@@ -119,6 +123,8 @@ export default function Routes() {
               backgroundColor: '#fff',
               elevation: 1,
               borderTopWidth: 1,
+              paddingBottom: Platform.OS === 'ios' ? 30 : 5,
+              paddingTop: Platform.OS === 'ios' ? 10 : 5,
               top: 1,
               shadowOffset: {
                 width: 0,
@@ -160,6 +166,10 @@ export default function Routes() {
 }
 
 tabBarIcon.propTypes = {
+  color: PropTypes.string,
+};
+
+tabBarLabel.propTypes = {
   color: PropTypes.string,
 };
 
