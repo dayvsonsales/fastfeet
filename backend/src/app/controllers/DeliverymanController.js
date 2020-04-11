@@ -14,12 +14,6 @@ class DeliverymanController {
     const data = await Deliveryman.findAndCountAll({
       offset: (page - 1) * limit,
       limit,
-      include: [
-        {
-          model: File,
-          as: 'avatar',
-        },
-      ],
       where: {
         name: {
           [Op.iLike]: `%${q}%`,
@@ -28,6 +22,13 @@ class DeliverymanController {
           [Op.ne]: null,
         },
       },
+      include: [
+        {
+          model: File,
+          as: 'avatar',
+        },
+      ],
+      order: [['id', 'asc']],
     });
 
     return res.send(data);

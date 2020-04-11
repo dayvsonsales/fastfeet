@@ -8,6 +8,8 @@ class DeliveryProblemController {
     const limit = 5;
 
     const deliveries = await DeliveryProblem.findAndCountAll({
+      offset: (page - 1) * limit,
+      limit,
       include: [
         {
           model: Delivery,
@@ -15,8 +17,7 @@ class DeliveryProblemController {
           required: true,
         },
       ],
-      offset: (page - 1) * limit,
-      limit,
+      order: [['id', 'asc']],
     });
 
     return res.json(deliveries);

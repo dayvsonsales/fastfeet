@@ -20,6 +20,7 @@ class RecipientController {
           [Op.ne]: null,
         },
       },
+      order: [['id', 'asc']],
     });
 
     return res.json(recipient);
