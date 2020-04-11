@@ -189,7 +189,7 @@ export default function DeliveryDetails({ route, navigation }) {
                         <Button
                           onPress={handleConfirm}
                           disabled={!!delivery.end_date}>
-                          <Icon name="check-circle" color="#7D40E7" size={24} />
+                          <Icon name="alarm-on" color="#7D40E7" size={24} />
                           <ButtonText>Confirmar Entrega</ButtonText>
                         </Button>
                       </>

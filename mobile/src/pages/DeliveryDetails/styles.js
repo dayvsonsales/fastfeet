@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const Background = styled(LinearGradient).attrs({
@@ -11,7 +11,7 @@ export const Background = styled(LinearGradient).attrs({
 
 export const Wrapper = styled.ScrollView`
   flex: 1;
-  margin-top: 90px;
+  margin-top: ${() => (Platform.OS === 'ios' ? '90px' : '60px')};
 `;
 
 export const Container = styled.View`
@@ -23,8 +23,15 @@ export const DataContainer = styled.View`
   border-radius: 4px;
   background: #ffffff;
   padding: 15px;
-  border: 1px solid #0000001a;
   margin-bottom: 10px;
+  ${() =>
+    Platform.OS === 'android'
+      ? css`
+          elevation: 3;
+        `
+      : css`
+          border: 1px solid #0000001a;
+        `}
 `;
 export const Header = styled.View`
   flex-direction: row;
@@ -58,10 +65,17 @@ export const DataGroup = styled.View`
 
 export const ButtonContainer = styled.View`
   border-radius: 4px;
-  border: 1px solid #0000001a;
   background: #f8f9fd;
   flex-direction: row;
   justify-content: space-around;
+  ${() =>
+    Platform.OS === 'android'
+      ? css`
+          elevation: 2;
+        `
+      : css`
+          border: 1px solid #0000001a;
+        `}
 `;
 
 export const Button = styled.TouchableOpacity`
