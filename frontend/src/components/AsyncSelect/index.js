@@ -42,6 +42,8 @@ export default function AsyncSelect({ name, loadOptions, ...rest }) {
         components={{
           IndicatorSeparator: () => null,
         }}
+        placeholder="Selecione..."
+        noOptionsMessage={() => 'Nenhum registro encontrado'}
         {...rest}
       />
       {error && <span className="error">{error}</span>}
