@@ -33,10 +33,13 @@ export const DeliveryInformation = styled.div`
   }
 
   img {
-    width: 234px;
-    height: 36px;
+    min-width: 234px;
+    min-height: 36px;
+    max-width: 234px;
+    max-height: 234px;
     align-self: center;
     margin: 23px auto;
+    image-orientation: from-image;
   }
 `;
 

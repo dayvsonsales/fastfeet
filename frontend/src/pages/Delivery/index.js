@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 
 import { format, parseISO } from 'date-fns';
 import { toast } from 'react-toastify';
+import { BulletList as Loading } from 'react-content-loader';
 import api from '~/services/api';
 
 import {
@@ -49,6 +50,8 @@ export default function Delivery({ history }) {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
 
+  const [loading, setLoading] = useState(true);
+
   function handleSearch(_product) {
     console.tron.log(product);
     setProduct(_product);
@@ -64,6 +67,7 @@ export default function Delivery({ history }) {
   }
 
   async function loadDeliveries(_page = 1) {
+    setLoading(true);
     const response = await api.get(`/delivery?page=${_page}&q=${product}`);
 
     setTotal(response.data.count);
@@ -92,6 +96,7 @@ export default function Delivery({ history }) {
       };
     });
 
+    setLoading(false);
     setDeliveries(data);
   }
 
@@ -132,6 +137,7 @@ export default function Delivery({ history }) {
         <header>
           <strong>Gerenciando encomendas</strong>
         </header>
+
         <ActionList>
           <SearchInput
             placeholder="Buscar por encomendas"
@@ -145,71 +151,89 @@ export default function Delivery({ history }) {
             <span>Cadastrar</span>
           </button>
         </ActionList>
-        <Table>
-          <thead>
-            <tr>
-              <th width="5%">ID</th>
-              <th width="20%">Destinatário</th>
-              <th width="20%">Entregador</th>
-              <th width="15%">Cidade</th>
-              <th width="15%">Estado</th>
-              <th width="12%">Status</th>
-              <th width="7%">Ações</th>
-            </tr>
-          </thead>
+        {loading ? (
+          <Loading
+            backgroundColor="#fff"
+            foregroundColor="#999"
+            style={{ width: '50%', height: '20%' }}
+          />
+        ) : (
+          <>
+            <Table>
+              <thead>
+                <tr>
+                  <th width="5%">ID</th>
+                  <th width="20%">Destinatário</th>
+                  <th width="20%">Entregador</th>
+                  <th width="15%">Cidade</th>
+                  <th width="15%">Estado</th>
+                  <th width="12%">Status</th>
+                  <th width="7%">Ações</th>
+                </tr>
+              </thead>
 
-          <tbody>
-            {deliveries.map((delivery) => (
-              <tr key={delivery.id}>
-                <td>#{delivery.id < 10 ? `0${delivery.id}` : delivery.id}</td>
-                <td>{delivery.recipient.name}</td>
-                <td>
-                  <Profile>
-                    {delivery.deliveryman.avatar ? (
-                      <img
-                        src={delivery.deliveryman.avatar.url}
-                        alt={delivery.deliveryman.name}
-                      />
-                    ) : (
-                      <div>{delivery.deliveryman.slug}</div>
-                    )}
-                    {delivery.deliveryman.name}
-                  </Profile>
-                </td>
-                <td>{delivery.recipient.city}</td>
-                <td>{delivery.recipient.state}</td>
-                <td>
-                  <DeliveryStatus type={delivery.type} />
-                </td>
-                <td>
-                  <Dropdown>
-                    <MdMoreHoriz size={24} color="#C6C6C6" />
-                    <DropdownContent>
-                      <a href="#modal" onClick={() => handleModal(delivery)}>
-                        <MdVisibility size={10} color="#8E5BE8" />
-                        Visualizar
-                      </a>
-                      <Link to={`/delivery/edit/${delivery.id}`}>
-                        <MdCreate size={10} color="#4D85EE" />
-                        Editar
-                      </Link>
-                      <a href="#delete" onClick={() => handleDelete(delivery)}>
-                        <MdDeleteForever size={10} color="#DE3B3B" />
-                        Excluir
-                      </a>
-                    </DropdownContent>
-                  </Dropdown>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-        <Paginator
-          limit={5}
-          page={page}
-          total={total}
-          handlePaginator={loadDeliveries}
-        />
+              <tbody>
+                {deliveries.map((delivery) => (
+                  <tr key={delivery.id}>
+                    <td>
+                      #{delivery.id < 10 ? `0${delivery.id}` : delivery.id}
+                    </td>
+                    <td>{delivery.recipient.name}</td>
+                    <td>
+                      <Profile>
+                        {delivery.deliveryman.avatar ? (
+                          <img
+                            src={delivery.deliveryman.avatar.url}
+                            alt={delivery.deliveryman.name}
+                          />
+                        ) : (
+                          <div>{delivery.deliveryman.slug}</div>
+                        )}
+                        {delivery.deliveryman.name}
+                      </Profile>
+                    </td>
+                    <td>{delivery.recipient.city}</td>
+                    <td>{delivery.recipient.state}</td>
+                    <td>
+                      <DeliveryStatus type={delivery.type} />
+                    </td>
+                    <td>
+                      <Dropdown>
+                        <MdMoreHoriz size={24} color="#C6C6C6" />
+                        <DropdownContent>
+                          <a
+                            href="#modal"
+                            onClick={() => handleModal(delivery)}
+                          >
+                            <MdVisibility size={10} color="#8E5BE8" />
+                            Visualizar
+                          </a>
+                          <Link to={`/delivery/edit/${delivery.id}`}>
+                            <MdCreate size={10} color="#4D85EE" />
+                            Editar
+                          </Link>
+                          <a
+                            href="#delete"
+                            onClick={() => handleDelete(delivery)}
+                          >
+                            <MdDeleteForever size={10} color="#DE3B3B" />
+                            Excluir
+                          </a>
+                        </DropdownContent>
+                      </Dropdown>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+            <Paginator
+              limit={5}
+              page={page}
+              total={total}
+              handlePaginator={loadDeliveries}
+            />
+          </>
+        )}
       </Container>
 
       <Modal ref={refModal} show={show} onClickOutside={handleClickOutside}>
@@ -235,7 +259,13 @@ export default function Delivery({ history }) {
             <HorizontalLine />
             <strong>Assinatura do destinatário</strong>
             {currentDelivery.signature ? (
-              <img src={currentDelivery.signature.url} alt="Assinatura" />
+              <img
+                src={currentDelivery.signature.url}
+                onClick={() =>
+                  window.open(currentDelivery.signature.url, '__blank')
+                }
+                alt="Assinatura"
+              />
             ) : (
               <p>Sem imagem</p>
             )}

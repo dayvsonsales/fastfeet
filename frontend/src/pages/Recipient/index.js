@@ -5,12 +5,12 @@ import { MdAdd, MdMoreHoriz, MdDeleteForever, MdCreate } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
+import { BulletList as Loading } from 'react-content-loader';
 import api from '~/services/api';
 
 import { Container } from './styles';
 
 import { Dropdown, DropdownContent } from '~/components/Dropdown/styles';
-
 import SearchInput from '~/components/ActionList/SearchInput';
 import ActionList from '~/components/ActionList';
 import Table from '~/components/Table';
@@ -24,11 +24,15 @@ export default function Recipient({ history }) {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
 
+  const [loading, setLoading] = useState(true);
+
   function handleSearch(_name) {
     setName(_name);
   }
 
   async function loadRecipients(_page = 1) {
+    setLoading(true);
+
     const response = await api.get(`/recipients?page=${_page}&q=${name}`);
 
     setTotal(response.data.count);
@@ -41,6 +45,7 @@ export default function Recipient({ history }) {
       } - ${recipient.state}`,
     }));
 
+    setLoading(false);
     setRecipients(data);
   }
 
@@ -92,49 +97,63 @@ export default function Recipient({ history }) {
           <span>Cadastrar</span>
         </button>
       </ActionList>
+      {loading ? (
+        <Loading
+          backgroundColor="#fff"
+          foregroundColor="#999"
+          style={{ width: '50%', height: '20%' }}
+        />
+      ) : (
+        <>
+          <Table>
+            <thead>
+              <tr>
+                <th width="8%">ID</th>
+                <th width="20%">Nome</th>
+                <th width="60%">Endereço</th>
+                <th width="5%">Ações</th>
+              </tr>
+            </thead>
 
-      <Table>
-        <thead>
-          <tr>
-            <th width="8%">ID</th>
-            <th width="20%">Nome</th>
-            <th width="60%">Endereço</th>
-            <th width="5%">Ações</th>
-          </tr>
-        </thead>
+            <tbody>
+              {recipients.map((recipient) => (
+                <tr>
+                  <td>
+                    #{recipient.id < 10 ? `0${recipient.id}` : recipient.id}
+                  </td>
+                  <td>{recipient.name}</td>
+                  <td>{recipient.full_address}</td>
+                  <td>
+                    <Dropdown>
+                      <MdMoreHoriz size={24} color="#C6C6C6" />
+                      <DropdownContent>
+                        <Link to={`/recipient/edit/${recipient.id}`}>
+                          <MdCreate size={10} color="#4D85EE" />
+                          Editar
+                        </Link>
+                        <Link
+                          href="delete"
+                          onClick={() => handleDelete(recipient)}
+                        >
+                          <MdDeleteForever size={10} color="#DE3B3B" />
+                          Excluir
+                        </Link>
+                      </DropdownContent>
+                    </Dropdown>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
 
-        <tbody>
-          {recipients.map((recipient) => (
-            <tr>
-              <td>#{recipient.id < 10 ? `0${recipient.id}` : recipient.id}</td>
-              <td>{recipient.name}</td>
-              <td>{recipient.full_address}</td>
-              <td>
-                <Dropdown>
-                  <MdMoreHoriz size={24} color="#C6C6C6" />
-                  <DropdownContent>
-                    <Link to={`/recipient/edit/${recipient.id}`}>
-                      <MdCreate size={10} color="#4D85EE" />
-                      Editar
-                    </Link>
-                    <Link href="delete" onClick={() => handleDelete(recipient)}>
-                      <MdDeleteForever size={10} color="#DE3B3B" />
-                      Excluir
-                    </Link>
-                  </DropdownContent>
-                </Dropdown>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-
-      <Paginator
-        limit={5}
-        page={page}
-        total={total}
-        handlePaginator={loadRecipients}
-      />
+          <Paginator
+            limit={5}
+            page={page}
+            total={total}
+            handlePaginator={loadRecipients}
+          />
+        </>
+      )}
     </Container>
   );
 }
