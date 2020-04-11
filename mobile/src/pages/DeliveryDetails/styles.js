@@ -9,8 +9,13 @@ export const Background = styled(LinearGradient).attrs({
   background-color: black;
 `;
 
-export const Container = styled.View`
+export const Wrapper = styled.ScrollView`
+  flex: 1;
   margin-top: 90px;
+`;
+
+export const Container = styled.View`
+  flex: 1;
   padding: 20px;
 `;
 
@@ -56,7 +61,7 @@ export const ButtonContainer = styled.View`
   border: 1px solid #0000001a;
   background: #f8f9fd;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 export const Button = styled.TouchableOpacity`
@@ -71,7 +76,7 @@ export const ButtonText = styled.Text.attrs({
   color: #999999;
   font-size: 12px;
   text-align: center;
-  width: 100px;
+  width: 70%;
 `;
 export const VerticalLine = styled.View`
   width: 1px;
