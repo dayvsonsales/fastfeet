@@ -24,6 +24,7 @@ class EndDeliveryController {
     }
 
     delivery.end_date = new Date();
+    delivery.signature_id = req.body.signature_id;
 
     const data = await delivery.save();
 
