@@ -1,6 +1,6 @@
 import { Platform } from 'react-native';
 import styled, { css } from 'styled-components/native';
-import { RectButton, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export const Container = styled.KeyboardAvoidingView.attrs({
   enabled: Platform.OS === 'ios',
@@ -46,16 +46,18 @@ export const Name = styled.Text.attrs({
   width: 200px;
 `;
 
-export const DeliveryContainer = styled.View`
+export const DeliveryContainer = styled.SafeAreaView`
+  flex: 1;
   flex-direction: column;
   margin: 20px;
-  flex: 1;
+  margin-bottom: 0;
 `;
 
 export const HeaderContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 10px;
 `;
 
 export const Title = styled.Text`
@@ -88,7 +90,7 @@ export const ChooseButtonText = styled.Text`
 
 export const ListContainer = styled.View`
   flex-direction: column;
-  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 export const ItemContainer = styled.View`
@@ -170,6 +172,7 @@ export const DateText = styled.Text`
   color: #444444;
   font-size: 12px;
   font-weight: bold;
+  max-width: 100px;
 `;
 export const Details = styled.View`
   align-items: center;

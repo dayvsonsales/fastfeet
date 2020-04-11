@@ -40,9 +40,10 @@ export const Problem = styled.View`
   align-items: center;
 `;
 
-export const ProblemText = styled.Text`
+export const ProblemText = styled.Text.attrs({})`
   font-size: 16px;
   color: #999999;
+  width: 225px;
 `;
 
 export const ProblemDate = styled.Text`

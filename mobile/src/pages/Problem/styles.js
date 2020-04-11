@@ -14,7 +14,7 @@ export const Container = styled.ScrollView`
   padding: 20px;
 `;
 
-export const ProblemContainer = styled.View`
+export const ProblemContainer = styled.KeyboardAvoidingView`
   flex-direction: column;
   padding: 20px;
   height: 300px;
