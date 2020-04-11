@@ -6,7 +6,6 @@ class NewDelivery {
   }
 
   async handle({ data: delivery }) {
-    console.log(delivery);
     const { deliveryman, recipient } = delivery;
 
     await Mail.sendMail({
