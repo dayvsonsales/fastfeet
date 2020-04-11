@@ -36,6 +36,9 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'no-console': ['error', { allow: ['tron'] }],
     'react/display-name': 'off',
+    'no-nested-ternary': 'off',
+    'no-undef': 'off',
+    'consistent-return': 'off',
   },
   settings: {
     'import/resolver': {
