@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 import { RNCamera } from 'react-native-camera';
+import { Platform } from 'react-native';
 
 export const Background = styled(LinearGradient).attrs({
   colors: ['#7D40E7', '#FFFFFF'],
@@ -11,7 +12,7 @@ export const Background = styled(LinearGradient).attrs({
 `;
 
 export const Container = styled.View`
-  margin-top: 90px;
+  margin-top: ${() => (Platform.OS === 'ios' ? '90px' : '60px')};
   padding: 20px;
   flex-direction: column;
   justify-content: space-between;
@@ -56,6 +57,6 @@ export const TakeButtonContainer = styled.TouchableOpacity`
   background: #0000004d;
   align-items: center;
   justify-content: center;
-  bottom: 10px;
+  bottom: 25px;
   align-self: center;
 `;

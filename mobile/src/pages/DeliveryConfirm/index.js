@@ -74,7 +74,7 @@ export default function DeliveryConfirm({ route, navigation }) {
             <>
               <Camera ref={cameraRef} type="back" flashMode="auto" />
               <TakeButtonContainer onPress={takePicture}>
-                <Icon name="camera-alt" size={24} color="#FFFFFF" />
+                <Icon name="camera-alt" size={36} color="#FFFFFF" />
               </TakeButtonContainer>
             </>
           ) : (
@@ -84,7 +84,7 @@ export default function DeliveryConfirm({ route, navigation }) {
                 style={{ width: '100%', height: '100%' }}
               />
               <TakeButtonContainer onPress={() => setPhoto(null)}>
-                <Icon name="delete-forever" size={24} color="#FFFFFF" />
+                <Icon name="delete-forever" size={36} color="#FFFFFF" />
               </TakeButtonContainer>
             </>
           )}
