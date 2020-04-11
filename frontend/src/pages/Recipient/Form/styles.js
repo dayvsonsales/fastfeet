@@ -74,8 +74,10 @@ export const Column = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: ${(props) => (props.padding ? props.padding : '30px')}
-    ${(props) => props.important && '!important'};
+  padding: ${(props) =>
+    props.padding
+      ? `${props.padding} ${props.important && '!important'}`
+      : `30px ${props.important && '!important'}`};
 
   label {
     text-align: left;

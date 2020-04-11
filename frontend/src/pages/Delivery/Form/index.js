@@ -92,31 +92,31 @@ export default function Form({ history }) {
     }
   }
 
-  async function loadDelivery() {
-    try {
-      const response = await api.get(`delivery?id=${id}`);
-
-      const data = response.data.rows.map((_delivery) => ({
-        ..._delivery,
-        deliveryman_id: {
-          label: _delivery.deliveryman.name,
-          value: _delivery.deliveryman.id,
-        },
-        recipient_id: {
-          label: _delivery.recipient.name,
-          value: _delivery.recipient.id,
-        },
-      }));
-
-      formRef.current.setFieldValue('deliveryman_id', data[0].deliveryman_id);
-      formRef.current.setFieldValue('recipient_id', data[0].recipient_id);
-      setDelivery(data[0]);
-    } catch (e) {
-      toast.error('Delivery não encontrado');
-    }
-  }
-
   useEffect(() => {
+    async function loadDelivery() {
+      try {
+        const response = await api.get(`delivery?id=${id}`);
+
+        const data = response.data.rows.map((_delivery) => ({
+          ..._delivery,
+          deliveryman_id: {
+            label: _delivery.deliveryman.name,
+            value: _delivery.deliveryman.id,
+          },
+          recipient_id: {
+            label: _delivery.recipient.name,
+            value: _delivery.recipient.id,
+          },
+        }));
+
+        formRef.current.setFieldValue('deliveryman_id', data[0].deliveryman_id);
+        formRef.current.setFieldValue('recipient_id', data[0].recipient_id);
+        setDelivery(data[0]);
+      } catch (e) {
+        toast.error('Delivery não encontrado');
+      }
+    }
+
     if (id) {
       loadDelivery();
     }

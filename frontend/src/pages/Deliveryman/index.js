@@ -32,29 +32,6 @@ export default function Deliveryman({ history }) {
     setName(_name);
   }
 
-  async function loadDeliverymen(_page = 1) {
-    setLoading(true);
-    const response = await api.get(`/deliveryman?page=${_page}&q=${name}`);
-
-    setTotal(response.data.count);
-    setPage(_page);
-
-    const data = response.data.rows.map((delivery) => {
-      const { name: _name } = delivery;
-
-      delivery.slug = generateSlug(_name);
-
-      return {
-        ...delivery,
-        deliveryman: {
-          ...delivery.deliveryman,
-        },
-      };
-    });
-    setLoading(false);
-    setDeliverymen(data);
-  }
-
   async function handleDelete({ id }) {
     if (
       window.confirm('Se você remover, não poderá mais recuperar. Tem certeza?')
@@ -68,23 +45,50 @@ export default function Deliveryman({ history }) {
         setTotal(data.length);
 
         if (data.length === 0) {
-          loadDeliverymen(page - 1);
+          setPage(page - 1);
         } else {
-          loadDeliverymen(page);
+          const _page = page;
+          setPage(0);
+          setPage(_page);
         }
 
         toast.success('Removido com sucesso!');
       } catch (e) {
-        toast.error(
-          'Ocorreu um erro ao remover entregador. Tente novamente mais tarde'
-        );
+        toast.error('Não foi possível remover entregador.');
       }
     }
   }
 
   useEffect(() => {
+    async function loadDeliverymen() {
+      if (page < 1) {
+        return;
+      }
+
+      setLoading(true);
+
+      const response = await api.get(`/deliveryman?page=${page}&q=${name}`);
+
+      setTotal(response.data.count);
+
+      const data = response.data.rows.map((delivery) => {
+        const { name: _name } = delivery;
+
+        delivery.slug = generateSlug(_name);
+
+        return {
+          ...delivery,
+          deliveryman: {
+            ...delivery.deliveryman,
+          },
+        };
+      });
+      setLoading(false);
+      setDeliverymen(data);
+    }
+
     loadDeliverymen();
-  }, [name]);
+  }, [name, page]);
 
   return (
     <Container>
@@ -126,7 +130,7 @@ export default function Deliveryman({ history }) {
 
             <tbody>
               {deliverymen.map((deliveryman) => (
-                <tr>
+                <tr key={deliveryman.id}>
                   <td>
                     #
                     {deliveryman.id < 10
@@ -155,13 +159,13 @@ export default function Deliveryman({ history }) {
                           <MdCreate size={10} color="#4D85EE" />
                           Editar
                         </Link>
-                        <Link
+                        <a
                           href="#delete"
                           onClick={() => handleDelete(deliveryman)}
                         >
                           <MdDeleteForever size={10} color="#DE3B3B" />
                           Excluir
-                        </Link>
+                        </a>
                       </DropdownContent>
                     </Dropdown>
                   </td>
@@ -174,7 +178,7 @@ export default function Deliveryman({ history }) {
             limit={5}
             page={page}
             total={total}
-            handlePaginator={loadDeliverymen}
+            handlePaginator={setPage}
           />
         </>
       )}

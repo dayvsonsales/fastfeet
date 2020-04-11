@@ -53,7 +53,6 @@ export default function Delivery({ history }) {
   const [loading, setLoading] = useState(true);
 
   function handleSearch(_product) {
-    console.tron.log(product);
     setProduct(_product);
   }
 
@@ -64,40 +63,6 @@ export default function Delivery({ history }) {
 
   function handleClickOutside() {
     setShow(false);
-  }
-
-  async function loadDeliveries(_page = 1) {
-    setLoading(true);
-    const response = await api.get(`/delivery?page=${_page}&q=${product}`);
-
-    setTotal(response.data.count);
-    setPage(_page);
-
-    const data = response.data.rows.map((delivery) => {
-      const { name } = delivery.deliveryman;
-
-      delivery.deliveryman.slug = generateSlug(name);
-      delivery.type = type(delivery);
-
-      delivery.start_date =
-        delivery.start_date &&
-        format(parseISO(delivery.start_date), 'dd/MM/yyyy');
-      delivery.canceled_at =
-        delivery.canceled_at &&
-        format(parseISO(delivery.canceled_at), 'dd/MM/yyyy');
-      delivery.end_date =
-        delivery.end_date && format(parseISO(delivery.end_date), 'dd/MM/yyyy');
-
-      return {
-        ...delivery,
-        deliveryman: {
-          ...delivery.deliveryman,
-        },
-      };
-    });
-
-    setLoading(false);
-    setDeliveries(data);
   }
 
   async function handleDelete({ id }) {
@@ -113,23 +78,62 @@ export default function Delivery({ history }) {
         setTotal(data.length);
 
         if (data.length === 0) {
-          loadDeliveries(page - 1);
+          setPage(page - 1);
         } else {
-          loadDeliveries(page);
+          const _page = page;
+          setPage(0);
+          setPage(_page);
         }
 
         toast.success('Removido com sucesso!');
       } catch (e) {
-        toast.error(
-          'Ocorreu um erro ao remover encomenda. Tente novamente mais tarde'
-        );
+        toast.error('Não foi possível remover encomenda.');
       }
     }
   }
 
   useEffect(() => {
+    async function loadDeliveries() {
+      if (page < 1) {
+        return;
+      }
+
+      setLoading(true);
+
+      const response = await api.get(`/delivery?page=${page}&q=${product}`);
+
+      setTotal(response.data.count);
+
+      const data = response.data.rows.map((delivery) => {
+        const { name } = delivery.deliveryman;
+
+        delivery.deliveryman.slug = generateSlug(name);
+        delivery.type = type(delivery);
+
+        delivery.start_date =
+          delivery.start_date &&
+          format(parseISO(delivery.start_date), 'dd/MM/yyyy');
+        delivery.canceled_at =
+          delivery.canceled_at &&
+          format(parseISO(delivery.canceled_at), 'dd/MM/yyyy');
+        delivery.end_date =
+          delivery.end_date &&
+          format(parseISO(delivery.end_date), 'dd/MM/yyyy');
+
+        return {
+          ...delivery,
+          deliveryman: {
+            ...delivery.deliveryman,
+          },
+        };
+      });
+
+      setLoading(false);
+      setDeliveries(data);
+    }
+
     loadDeliveries();
-  }, [product]);
+  }, [product, page]);
 
   return (
     <>
@@ -230,7 +234,7 @@ export default function Delivery({ history }) {
               limit={5}
               page={page}
               total={total}
-              handlePaginator={loadDeliveries}
+              handlePaginator={setPage}
             />
           </>
         )}

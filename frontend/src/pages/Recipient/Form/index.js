@@ -67,20 +67,20 @@ export default function Form({ history }) {
     }
   }
 
-  async function loadRecipient() {
-    try {
-      const response = await api.get(`recipients?id=${id}`);
-      const data = response.data.rows[0];
-
-      formRef.current.setFieldValue('zip_code', data.zip_code);
-
-      setRecipient(data);
-    } catch (e) {
-      toast.error('Entregador não encontrado');
-    }
-  }
-
   useEffect(() => {
+    async function loadRecipient() {
+      try {
+        const response = await api.get(`recipients?id=${id}`);
+        const data = response.data.rows[0];
+
+        formRef.current.setFieldValue('zip_code', data.zip_code);
+
+        setRecipient(data);
+      } catch (e) {
+        toast.error('Entregador não encontrado');
+      }
+    }
+
     if (id) {
       loadRecipient();
     }

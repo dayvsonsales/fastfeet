@@ -36,6 +36,10 @@ export default function Problem() {
   }
 
   async function loadDeliveryProblems(_page = 1) {
+    if (_page < 1) {
+      return;
+    }
+
     setLoading(true);
 
     const response = await api.get(`delivery-problems?page=${_page}`);
@@ -57,13 +61,9 @@ export default function Problem() {
       try {
         await api.delete(`/problem/${id}/cancel-delivery`);
 
-        setDeliveryProblems(deliveriesProblems.filter((d) => d.id !== id));
-
-        toast.success('Removido com sucesso!');
+        toast.success('Cancelado com sucesso!');
       } catch (e) {
-        toast.error(
-          'Ocorreu um erro ao remover encomenda. Tente novamente mais tarde'
-        );
+        toast.error('Não foi possível remover problema.');
       }
     }
   }

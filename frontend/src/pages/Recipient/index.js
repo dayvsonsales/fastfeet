@@ -3,14 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { MdAdd, MdMoreHoriz, MdDeleteForever, MdCreate } from 'react-icons/md';
 
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import { BulletList as Loading } from 'react-content-loader';
+import PropTypes from 'prop-types';
+import { Container } from './styles';
+import { Dropdown, DropdownContent } from '~/components/Dropdown/styles';
+
 import api from '~/services/api';
 
-import { Container } from './styles';
-
-import { Dropdown, DropdownContent } from '~/components/Dropdown/styles';
 import SearchInput from '~/components/ActionList/SearchInput';
 import ActionList from '~/components/ActionList';
 import Table from '~/components/Table';
@@ -30,25 +30,6 @@ export default function Recipient({ history }) {
     setName(_name);
   }
 
-  async function loadRecipients(_page = 1) {
-    setLoading(true);
-
-    const response = await api.get(`/recipients?page=${_page}&q=${name}`);
-
-    setTotal(response.data.count);
-    setPage(_page);
-
-    const data = response.data.rows.map((recipient) => ({
-      ...recipient,
-      full_address: `${recipient.street}, ${recipient.number || 'S/N'}, ${
-        recipient.city
-      } - ${recipient.state}`,
-    }));
-
-    setLoading(false);
-    setRecipients(data);
-  }
-
   async function handleDelete({ id }) {
     if (
       window.confirm('Se você remover, não poderá mais recuperar. Tem certeza?')
@@ -62,23 +43,45 @@ export default function Recipient({ history }) {
         setTotal(data.length);
 
         if (data.length === 0) {
-          loadRecipients(page - 1);
+          setPage(page - 1);
         } else {
-          loadRecipients(page);
+          const _page = page;
+          setPage(0);
+          setPage(_page);
         }
 
         toast.success('Removido com sucesso!');
       } catch (e) {
-        toast.error(
-          'Ocorreu um erro ao remover entregador. Tente novamente mais tarde'
-        );
+        toast.error('Não foi possível remover entregador.');
       }
     }
   }
 
   useEffect(() => {
+    async function loadRecipients() {
+      if (page < 1) {
+        return;
+      }
+
+      setLoading(true);
+
+      const response = await api.get(`/recipients?page=${page}&q=${name}`);
+
+      setTotal(response.data.count);
+
+      const data = response.data.rows.map((recipient) => ({
+        ...recipient,
+        full_address: `${recipient.street}, ${recipient.number || 'S/N'}, ${
+          recipient.city
+        } - ${recipient.state}`,
+      }));
+
+      setLoading(false);
+      setRecipients(data);
+    }
+
     loadRecipients();
-  }, [name]);
+  }, [name, page]);
 
   return (
     <Container>
@@ -117,7 +120,7 @@ export default function Recipient({ history }) {
 
             <tbody>
               {recipients.map((recipient) => (
-                <tr>
+                <tr key={recipient.id}>
                   <td>
                     #{recipient.id < 10 ? `0${recipient.id}` : recipient.id}
                   </td>
@@ -131,13 +134,13 @@ export default function Recipient({ history }) {
                           <MdCreate size={10} color="#4D85EE" />
                           Editar
                         </Link>
-                        <Link
-                          href="delete"
+                        <a
+                          href="#delete"
                           onClick={() => handleDelete(recipient)}
                         >
                           <MdDeleteForever size={10} color="#DE3B3B" />
                           Excluir
-                        </Link>
+                        </a>
                       </DropdownContent>
                     </Dropdown>
                   </td>
@@ -150,7 +153,7 @@ export default function Recipient({ history }) {
             limit={5}
             page={page}
             total={total}
-            handlePaginator={loadRecipients}
+            handlePaginator={setPage}
           />
         </>
       )}

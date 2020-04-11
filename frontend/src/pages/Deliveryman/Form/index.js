@@ -66,21 +66,27 @@ export default function Form({ history }) {
     }
   }
 
-  async function loadDeliveryman() {
-    try {
-      const response = await api.get(`deliveryman?id=${id}`);
-
-      setDeliveryman(response.data.rows[0]);
-    } catch (e) {
-      toast.error('Entregador não encontrado');
-    }
-  }
-
   useEffect(() => {
+    async function loadDeliveryman() {
+      try {
+        const response = await api.get(`deliveryman?id=${id}`);
+
+        setDeliveryman(response.data.rows[0]);
+      } catch (e) {
+        toast.error('Entregador não encontrado');
+      }
+    }
+
     if (id) {
       loadDeliveryman();
     }
   }, [id]);
+
+  function handleForm(e) {
+    if (e.target.localName === 'input') {
+      formRef.current.setFieldError(e.target.id, null);
+    }
+  }
 
   return (
     <Container>
@@ -88,6 +94,7 @@ export default function Form({ history }) {
         initialData={deliveryman}
         ref={formRef}
         onSubmit={handleSubmit}
+        onClick={handleForm}
       >
         <header>
           <strong>{title}</strong>
