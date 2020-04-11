@@ -15,8 +15,10 @@ export default function Paginator({
     throw new Error('Limit cannot be zero');
   }
 
+  const div = total / limit;
   const activePrevious = page === 1;
-  const activeNext = page >= total / limit;
+  const activeNext = page >= div;
+  const pages = Math.ceil(div);
 
   return (
     <Wrapper>
@@ -40,7 +42,7 @@ export default function Paginator({
       </Container>
 
       <span>
-        Página {page} de {Math.ceil(total / limit)}. Total de {total} registros.
+        Página {page} de {pages || 1}. Total de {total} registros.
       </span>
     </Wrapper>
   );
