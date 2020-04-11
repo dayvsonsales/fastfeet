@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Image } from 'react-native';
+import { Image, TouchableOpacity } from 'react-native';
 import {
   Container,
   LogoutButton,
@@ -10,7 +10,6 @@ import {
   InformationContainer,
   InformationLabel,
   InformationText,
-  Wrapper,
 } from './styles';
 
 import { persistor } from '~/store';
@@ -29,6 +28,9 @@ export default function Profile() {
           <Image
             style={{ width: 136, height: 136, borderRadius: 68 }}
             source={{ uri: profile.avatar.url }}
+            onError={(e) => {
+              console.tron.log(e);
+            }}
           />
         ) : (
           <Slug>{profile.slug}</Slug>
@@ -50,7 +52,9 @@ export default function Profile() {
         <InformationText>{profile.formatted_created_at}</InformationText>
       </InformationContainer>
 
-      <LogoutButton onPress={handleLogout}>Logout</LogoutButton>
+      <TouchableOpacity onPress={handleLogout}>
+        <LogoutButton>Logout</LogoutButton>
+      </TouchableOpacity>
     </Container>
   );
 }
