@@ -121,11 +121,13 @@ export default function Routes() {
             inactiveTintColor: '#999999',
             style: {
               backgroundColor: '#fff',
-              elevation: 1,
-              borderTopWidth: 1,
-              paddingBottom: Platform.OS === 'ios' ? 30 : 5,
-              paddingTop: Platform.OS === 'ios' ? 10 : 5,
+              elevation: 10,
+              borderTopWidth: 0,
+              paddingBottom: Platform.OS === 'ios' ? 30 : 10,
+              paddingTop: Platform.OS === 'ios' ? 10 : 15,
               top: 1,
+              height: Platform.OS === 'ios' ? 90 : 70,
+              marginTop: 1,
               shadowOffset: {
                 width: 0,
                 height: -2,
@@ -158,7 +160,6 @@ export default function Routes() {
             headerShown: false,
           }}>
           <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="SignUp" component={SignUp} />
         </Stack.Navigator>
       )}
     </NavigationContainer>
