@@ -10,8 +10,9 @@ export const Background = styled(LinearGradient).attrs({
 `;
 
 export const Container = styled.ScrollView`
-  margin-top: 90px;
+  margin-top: ${() => (Platform.OS === 'ios' ? '90px' : '60px')};
   padding: 20px;
+  flex: 1;
 `;
 
 export const ProblemContainer = styled.KeyboardAvoidingView`
@@ -19,8 +20,8 @@ export const ProblemContainer = styled.KeyboardAvoidingView`
   padding: 20px;
   height: 300px;
   border-radius: 4px;
-  border: 1px solid #0000001a;
   background: #ffffff;
+  border: 1px solid #0000001a;
 `;
 
 export const ProblemInput = styled.TextInput.attrs({
