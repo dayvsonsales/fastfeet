@@ -6,11 +6,12 @@ import {
   Container,
   LogoutButton,
   Avatar,
-  Slug,
   InformationContainer,
   InformationLabel,
   InformationText,
 } from './styles';
+
+import ProfilePhoto from '~/components/Profile';
 
 import { persistor } from '~/store';
 
@@ -33,7 +34,13 @@ export default function Profile() {
             }}
           />
         ) : (
-          <Slug>{profile.slug}</Slug>
+          <ProfilePhoto
+            width="138px"
+            height="138px"
+            borderRadius="68px"
+            fontSize="60px">
+            {profile.slug}
+          </ProfilePhoto>
         )}
       </Avatar>
 

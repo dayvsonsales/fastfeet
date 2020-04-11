@@ -7,7 +7,7 @@ export const Container = styled.KeyboardAvoidingView.attrs({
   behavior: 'padding',
 })`
   flex: 1;
-  margin-top: 50px;
+  margin-top: ${() => (Platform.OS === 'ios' ? '50px' : '10px')};
 `;
 
 export const List = styled.FlatList.attrs({
@@ -32,10 +32,9 @@ export const WelcomeContainer = styled.View`
 `;
 
 export const Welcome = styled.Text`
-  color: grey;
+  color: #666666;
+  font-size: 12px;
 `;
-
-export const Slug = styled.Text``;
 
 export const Name = styled.Text.attrs({
   numberOfLines: 1,
@@ -97,6 +96,7 @@ export const ItemContainer = styled.View`
   flex-direction: column;
   padding: 10px 20px 20px 20px;
   border-radius: 4px;
+
   border: 1px solid #0000001a;
 `;
 export const HeaderItemContainer = styled.View`
@@ -108,6 +108,7 @@ export const HeaderItemText = styled.Text`
   font-weight: bold;
   margin-left: 10px;
   font-size: 16px;
+  width: 100%;
 `;
 export const TimelineContainer = styled.View`
   flex-direction: row;

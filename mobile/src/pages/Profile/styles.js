@@ -57,11 +57,6 @@ export const Avatar = styled.View`
   justify-content: center;
   margin: 83px 120px 40px 120px;
 `;
-export const Slug = styled.Text`
-  width: 138px;
-  height: 138px;
-  border-radius: 68px;
-`;
 
 export const InformationContainer = styled.View`
   flex-direction: column;

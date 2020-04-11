@@ -18,7 +18,6 @@ import {
   Container,
   ProfileContainer,
   List,
-  Slug,
   WelcomeContainer,
   Welcome,
   Name,
@@ -47,6 +46,8 @@ import {
   BallContainer,
   InvisibleHorizontalLine,
 } from './styles';
+
+import Profile from '~/components/Profile';
 
 function Home({ isFocused, navigation }) {
   const [deliveries, setDeliveries] = useState([]);
@@ -107,11 +108,11 @@ function Home({ isFocused, navigation }) {
                 source={{ uri: user.avatar.url }}
               />
             ) : (
-              <Slug>{user.slug}</Slug>
+              <Profile>{user.slug}</Profile>
             )}
             <Salute>
               <Welcome>Bem vindo de volta,</Welcome>
-              <Name>{user.name}</Name>
+              <Name>Gaspar Antunes</Name>
             </Salute>
           </WelcomeContainer>
           <TouchableOpacity onPress={handleLogout}>
