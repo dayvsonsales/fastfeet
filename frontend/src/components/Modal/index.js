@@ -27,7 +27,12 @@ const Modal = forwardRef(({ children, show, onClickOutside }, ref) => {
 });
 
 Modal.propTypes = {
-  children: PropTypes.instanceOf(Array),
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.instanceOf(Object),
+    PropTypes.instanceOf(String),
+    PropTypes.instanceOf(Array),
+  ]),
   show: PropTypes.bool.isRequired,
   onClickOutside: PropTypes.func.isRequired,
 };
