@@ -51,8 +51,8 @@ import Profile from '~/components/Profile';
 
 function Home({ isFocused, navigation }) {
   const [deliveries, setDeliveries] = useState([]);
-  const [choosedPending, setChoosedPending] = useState(true);
-  const [choosedEnded, setChoosedEnded] = useState(false);
+  const [chosePending, setChosePending] = useState(true);
+  const [choseEnded, setChoseEnded] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const hasDeliveries = useMemo(() => deliveries.length > 0);
@@ -72,11 +72,11 @@ function Home({ isFocused, navigation }) {
     }));
 
     if (type === 'opened') {
-      setChoosedPending(true);
-      setChoosedEnded(false);
+      setChosePending(true);
+      setChoseEnded(false);
     } else {
-      setChoosedPending(false);
-      setChoosedEnded(true);
+      setChosePending(false);
+      setChoseEnded(true);
     }
 
     setLoading(false);
@@ -124,12 +124,12 @@ function Home({ isFocused, navigation }) {
             <Title>Entregas</Title>
             <ChooseButtonContainer>
               <ChooseButton onPress={() => loadDeliveries()}>
-                <ChooseButtonText choosed={choosedPending}>
+                <ChooseButtonText chose={chosePending}>
                   Pendentes
                 </ChooseButtonText>
               </ChooseButton>
               <ChooseButton onPress={() => loadDeliveries('ended')}>
-                <ChooseButtonText choosed={choosedEnded}>
+                <ChooseButtonText chose={choseEnded}>
                   Entregues
                 </ChooseButtonText>
               </ChooseButton>

@@ -77,10 +77,10 @@ export const ChooseButton = styled(TouchableOpacity)`
 
 export const ChooseButtonText = styled.Text`
   font-size: 14px;
-  color: ${(props) => (props.choosed ? '#7D40E7' : '#999')};
+  color: ${(props) => (props.chose ? '#7D40E7' : '#999')};
 
   ${(props) =>
-    props.choosed &&
+    props.chose &&
     css`
       font-weight: bold;
       text-decoration-line: underline;
