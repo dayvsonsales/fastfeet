@@ -22,6 +22,21 @@ import DeliveryForm from '~/pages/Delivery/Form';
 import DeliverymanForm from '~/pages/Deliveryman/Form';
 import RecipientForm from '~/pages/Recipient/Form';
 
+import api from '~/services/api';
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const statusCode = error.response ? error.response.status : null;
+
+    if (statusCode === 401) {
+      persistor.purge().then(window.location.reload());
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 export default function Routes() {
   return (
     <Provider store={store}>
