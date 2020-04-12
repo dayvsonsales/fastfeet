@@ -10,7 +10,7 @@ class StartDeliveryController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(401).json({ error: 'Validation failed' });
+      return res.status(400).json({ error: 'Validation failed' });
     }
 
     const { deliveryman_id: id } = req.body;

@@ -9,7 +9,7 @@ class EndDeliveryController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(401).json({ error: 'Validation failed' });
+      return res.status(400).json({ error: 'Validation failed' });
     }
 
     const delivery_id = req.params.id;
