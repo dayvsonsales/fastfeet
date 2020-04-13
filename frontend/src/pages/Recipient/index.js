@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-import { MdAdd, MdMoreHoriz, MdDeleteForever, MdCreate } from 'react-icons/md';
+import { MdAdd, MdDeleteForever, MdCreate } from 'react-icons/md';
 
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { BulletList as Loading } from 'react-content-loader';
 import PropTypes from 'prop-types';
 import { Container } from './styles';
-import { Dropdown, DropdownContent } from '~/components/Dropdown/styles';
+import Dropdown from '~/components/Dropdown';
 
 import api from '~/services/api';
 
@@ -128,20 +128,17 @@ export default function Recipient({ history }) {
                   <td>{recipient.full_address}</td>
                   <td>
                     <Dropdown>
-                      <MdMoreHoriz size={24} color="#C6C6C6" />
-                      <DropdownContent>
-                        <Link to={`/recipient/edit/${recipient.id}`}>
-                          <MdCreate size={10} color="#4D85EE" />
-                          Editar
-                        </Link>
-                        <a
-                          href="#delete"
-                          onClick={() => handleDelete(recipient)}
-                        >
-                          <MdDeleteForever size={10} color="#DE3B3B" />
-                          Excluir
-                        </a>
-                      </DropdownContent>
+                      <Link to={`/recipient/edit/${recipient.id}`}>
+                        <MdCreate size={10} color="#4D85EE" />
+                        Editar
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(recipient)}
+                      >
+                        <MdDeleteForever size={10} color="#DE3B3B" />
+                        <span>Excluir</span>
+                      </button>
                     </Dropdown>
                   </td>
                 </tr>

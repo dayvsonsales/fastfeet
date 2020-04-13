@@ -1,12 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-import {
-  MdAdd,
-  MdMoreHoriz,
-  MdVisibility,
-  MdDeleteForever,
-  MdCreate,
-} from 'react-icons/md';
+import { MdAdd, MdVisibility, MdDeleteForever, MdCreate } from 'react-icons/md';
 
 import { Link } from 'react-router-dom';
 
@@ -32,7 +26,7 @@ import Table from '~/components/Table';
 import Profile from '~/components/Profile';
 import DeliveryStatus from '~/components/DeliveryStatus';
 import Modal from '~/components/Modal';
-import { Dropdown, DropdownContent } from '~/components/Dropdown/styles';
+import Dropdown from '~/components/Dropdown';
 
 import SearchInput from '~/components/ActionList/SearchInput';
 
@@ -203,27 +197,24 @@ export default function Delivery({ history }) {
                     </td>
                     <td>
                       <Dropdown>
-                        <MdMoreHoriz size={24} color="#C6C6C6" />
-                        <DropdownContent>
-                          <a
-                            href="#modal"
-                            onClick={() => handleModal(delivery)}
-                          >
-                            <MdVisibility size={10} color="#8E5BE8" />
-                            Visualizar
-                          </a>
-                          <Link to={`/delivery/edit/${delivery.id}`}>
-                            <MdCreate size={10} color="#4D85EE" />
-                            Editar
-                          </Link>
-                          <a
-                            href="#delete"
-                            onClick={() => handleDelete(delivery)}
-                          >
-                            <MdDeleteForever size={10} color="#DE3B3B" />
-                            Excluir
-                          </a>
-                        </DropdownContent>
+                        <button
+                          type="button"
+                          onClick={() => handleModal(delivery)}
+                        >
+                          <MdVisibility size={10} color="#8E5BE8" />
+                          <span>Visualizar</span>
+                        </button>
+                        <Link to={`/delivery/edit/${delivery.id}`}>
+                          <MdCreate size={10} color="#4D85EE" />
+                          Editar
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(delivery)}
+                        >
+                          <MdDeleteForever size={10} color="#DE3B3B" />
+                          <span>Excluir</span>
+                        </button>
                       </Dropdown>
                     </td>
                   </tr>

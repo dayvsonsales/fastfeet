@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-import { MdMoreHoriz, MdDeleteForever, MdCreate } from 'react-icons/md';
+import { MdDeleteForever, MdCreate } from 'react-icons/md';
 
 import { toast } from 'react-toastify';
 import { BulletList as Loading } from 'react-content-loader';
 import api from '~/services/api';
 import { Container, ProblemInformation } from './styles';
 
-import { Dropdown, DropdownContent } from '~/components/Dropdown/styles';
+import Dropdown from '~/components/Dropdown';
 
 import Modal from '~/components/Modal';
 import Table from '~/components/Table';
@@ -116,23 +116,20 @@ export default function Problem() {
                     </td>
                     <td>
                       <Dropdown>
-                        <MdMoreHoriz size={24} color="#C6C6C6" />
-                        <DropdownContent>
-                          <a
-                            href="#problem"
-                            onClick={() => handleModal(deliveryProblem)}
-                          >
-                            <MdCreate size={10} color="#4D85EE" />
-                            Visualizar
-                          </a>
-                          <a
-                            href="#delete"
-                            onClick={() => handleCancel(deliveryProblem)}
-                          >
-                            <MdDeleteForever size={10} color="#DE3B3B" />
-                            Cancelar encomenda
-                          </a>
-                        </DropdownContent>
+                        <button
+                          type="button"
+                          onClick={() => handleModal(deliveryProblem)}
+                        >
+                          <MdCreate size={10} color="#4D85EE" />
+                          <span>Visualizar</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleCancel(deliveryProblem)}
+                        >
+                          <MdDeleteForever size={10} color="#DE3B3B" />
+                          <span>Cancelar encomenda</span>
+                        </button>
                       </Dropdown>
                     </td>
                   </tr>
