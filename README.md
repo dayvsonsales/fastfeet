@@ -13,10 +13,10 @@
 <p>Esse repositório é do FastFeet, que é uma aplicação completa (Back-end, Front-end e Mobile) que é avaliada para emissão do Certificado do Bootcamp GoStack!</p>
 
 <p align="center">
-  <a href="#rocket-sobre-o-desafio">Sobre o desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#instruções">Instruções</a>
+  <a href="#sobre">Sobre o desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#instruções">Instruções</a>
 </p>
 
-## 🚀 Sobre o desafio
+## Sobre
 
 FastFeet é uma aplicação para controle de deliveries. 
 
