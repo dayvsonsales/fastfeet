@@ -56,6 +56,7 @@ export const DropdownContent = styled.div.attrs({
     padding: 5px;
     padding-left: 0;
     min-width: 140px;
+    width: 100%;
     text-align: left !important;
     background: #ffffff 0% 0% no-repeat padding-box;
 
@@ -84,6 +85,7 @@ export const DropdownContent = styled.div.attrs({
     padding: 5px;
     padding-left: 0;
     min-width: 140px;
+    width: 100%;
     background: #ffffff 0% 0% no-repeat padding-box;
 
     color: #999999;
