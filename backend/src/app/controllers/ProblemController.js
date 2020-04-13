@@ -42,8 +42,6 @@ class ProblemController {
 
     req.body.delivery_id = delivery.id;
 
-    console.log(req.body);
-
     const data = await DeliveryProblem.create(req.body);
 
     return res.json(data);
