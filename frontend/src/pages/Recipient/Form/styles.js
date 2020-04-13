@@ -6,25 +6,20 @@ export const Container = styled.div`
   padding-right: 270px;
   padding-left: 270px;
   padding-top: 27px;
-
   header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
     div {
       display: flex;
       flex-direction: row;
-
       button:first-child {
         padding-right: 20px;
       }
-
       button:last-child {
         margin-left: 16px;
       }
     }
-
     strong {
       color: #444444;
       font-size: 24px;
@@ -33,20 +28,17 @@ export const Container = styled.div`
       color: #444444;
     }
   }
-
   section {
     margin-top: 20px;
     background: #ffffff 0% 0% no-repeat padding-box;
     border-radius: 4px;
   }
-
   input {
     background: #ffffff 0% 0% no-repeat padding-box;
     border: 1px solid #dddddd;
     border-radius: 4px;
     padding: 15px;
     color: #999999;
-
     &::placeholder {
       text-align: left;
       letter-spacing: 0px;
@@ -54,7 +46,6 @@ export const Container = styled.div`
       opacity: 1;
     }
   }
-
   .row:nth-child(even) {
     margin-top: -30px;
     margin-bottom: -30px;
@@ -74,11 +65,8 @@ export const Column = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: ${(props) =>
-    props.padding
-      ? `${props.padding} ${props.important && '!important'}`
-      : `30px ${props.important && '!important'}`};
-
+  padding: ${(props) => (props.padding ? props.padding : '30px')};
+  padding-right: 15px;
   label {
     text-align: left;
     letter-spacing: 0px;
@@ -86,13 +74,14 @@ export const Column = styled.div`
     font-weight: bold;
     margin-bottom: 10px;
   }
-
+  &:first-child {
+    padding-left: 30px !important;
+  }
   &:nth-child(even) {
     padding-left: 0px;
-    padding-right: 0px;
   }
-
   &:last-child {
+    padding-left: 0px;
     padding-right: 30px;
   }
 `;

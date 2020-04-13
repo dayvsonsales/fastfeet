@@ -118,7 +118,7 @@ export default function Form({ history }) {
             </Column>
           </Row>
           <Row>
-            <Column width="70%">
+            <Column width="60%">
               <label>Rua</label>
               <Input
                 name="street"
@@ -126,7 +126,7 @@ export default function Form({ history }) {
                 placeholder="Digite o nome do destinatário"
               />
             </Column>
-            <Column width="15%">
+            <Column width="20%">
               <label>Número</label>
               <Input name="number" type="text" placeholder="Número" />
             </Column>
