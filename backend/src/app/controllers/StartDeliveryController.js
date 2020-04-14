@@ -30,7 +30,7 @@ class StartDeliveryController {
       },
     });
 
-    if (countDeliveriesToday.count > 5) {
+    if (countDeliveriesToday.count >= 5) {
       return res
         .status(400)
         .json({ error: 'You have reached your delivery daily limit' });
