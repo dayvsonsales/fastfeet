@@ -84,6 +84,9 @@ export default function DeliveryDetails({ route, navigation }) {
   }
 
   function handleProblem() {
+    if (delivery.end_date || delivery.canceled_at || !delivery.start_date)
+      return;
+
     navigation.navigate('Problem', { id });
   }
 
@@ -92,6 +95,9 @@ export default function DeliveryDetails({ route, navigation }) {
   }
 
   function handleConfirm() {
+    if (delivery.end_date || delivery.canceled_at || !delivery.start_date)
+      return;
+
     navigation.navigate('Confirm', { id });
   }
 
@@ -111,7 +117,9 @@ export default function DeliveryDetails({ route, navigation }) {
   }
 
   useEffect(() => {
-    loadDelivery();
+    if (focused) {
+      loadDelivery();
+    }
   }, [focused]);
 
   return (
@@ -172,11 +180,28 @@ export default function DeliveryDetails({ route, navigation }) {
                 </DataContainer>
 
                 <ButtonContainer>
-                  <Button onPress={handleProblem}>
-                    <Icon name="highlight-off" color="#E74040" size={24} />
+                  <Button
+                    onPress={handleProblem}
+                    disabled={
+                      !delivery.start_date ||
+                      delivery.end_date ||
+                      delivery.canceled_at
+                    }>
+                    <Icon
+                      name="highlight-off"
+                      color={
+                        delivery.start_date &&
+                        !delivery.end_date &&
+                        !delivery.canceled_at
+                          ? '#E74040'
+                          : 'grey'
+                      }
+                      size={24}
+                    />
                     <ButtonText>Informar Problema</ButtonText>
                   </Button>
                   <VerticalLine />
+
                   <Button onPress={handleProblemDetails}>
                     <Icon name="info-outline" color="#E7BA40" size={24} />
                     <ButtonText>Visualizar Problemas</ButtonText>
@@ -190,21 +215,23 @@ export default function DeliveryDetails({ route, navigation }) {
                       </Button>
                     </>
                   ) : (
-                    !delivery.end_date && (
-                      <>
-                        <VerticalLine />
-                        <Button
-                          onPress={handleConfirm}
-                          disabled={!!delivery.end_date}>
-                          <IconCommunity
-                            name="check-circle-outline"
-                            color="#7D40E7"
-                            size={24}
-                          />
-                          <ButtonText>Confirmar Entrega</ButtonText>
-                        </Button>
-                      </>
-                    )
+                    <>
+                      <VerticalLine />
+                      <Button
+                        onPress={handleConfirm}
+                        disabled={!!delivery.end_date}>
+                        <IconCommunity
+                          name="check-circle-outline"
+                          color={
+                            !delivery.end_date && !delivery.canceled_at
+                              ? '#7D40E7'
+                              : 'grey'
+                          }
+                          size={24}
+                        />
+                        <ButtonText>Confirmar Entrega</ButtonText>
+                      </Button>
+                    </>
                   )}
                 </ButtonContainer>
               </>

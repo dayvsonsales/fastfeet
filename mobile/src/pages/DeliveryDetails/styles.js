@@ -68,6 +68,7 @@ export const ButtonContainer = styled.View`
   background: #f8f9fd;
   flex-direction: row;
   justify-content: space-around;
+
   ${() =>
     Platform.OS === 'android'
       ? css`
