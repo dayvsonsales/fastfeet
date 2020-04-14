@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Image, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import {
   Container,
   LogoutButton,
@@ -10,6 +10,8 @@ import {
   InformationLabel,
   InformationText,
 } from './styles';
+
+import Photo from '~/components/Avatar';
 
 import ProfilePhoto from '~/components/Profile';
 
@@ -26,12 +28,9 @@ export default function Profile() {
     <Container>
       <Avatar>
         {profile.avatar ? (
-          <Image
+          <Photo
             style={{ width: 136, height: 136, borderRadius: 68 }}
-            source={{ uri: profile.avatar.url }}
-            onError={(e) => {
-              console.tron.log(e);
-            }}
+            url={profile.avatar.url}
           />
         ) : (
           <ProfilePhoto
