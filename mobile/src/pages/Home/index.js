@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { withNavigationFocus } from '@react-navigation/compat';
 import { Image } from 'react-native';
 import { useSelector } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -49,21 +48,20 @@ import {
 
 import Profile from '~/components/Profile';
 
-function Home({ isFocused, navigation }) {
+export default function Home({ navigation }) {
   const [deliveries, setDeliveries] = useState([]);
-  const [chosePending, setChosePending] = useState(true);
-  const [choseEnded, setChoseEnded] = useState(false);
+  const [type, setType] = useState('opened');
   const [loading, setLoading] = useState(true);
-
-  const hasDeliveries = useMemo(() => deliveries.length > 0);
 
   const user = useSelector((state) => state.user.profile);
 
-  async function loadDeliveries(type = 'opened') {
+  async function loadDeliveries(_type) {
     setLoading(true);
 
+    setType(_type);
+
     const response = await api.get(
-      `/deliveryman/${user.id}/deliveries/${type}`
+      `/deliveryman/${user.id}/deliveries/${_type}`
     );
 
     const data = response.data.rows.map((delivery) => ({
@@ -71,23 +69,13 @@ function Home({ isFocused, navigation }) {
       formatted_date: format(parseISO(delivery.createdAt), 'dd/MM/yyyy'),
     }));
 
-    if (type === 'opened') {
-      setChosePending(true);
-      setChoseEnded(false);
-    } else {
-      setChosePending(false);
-      setChoseEnded(true);
-    }
-
     setLoading(false);
     setDeliveries(data);
   }
 
   useEffect(() => {
-    if (isFocused) {
-      loadDeliveries();
-    }
-  }, [isFocused]);
+    loadDeliveries('opened');
+  }, []);
 
   async function handleDetail(id) {
     navigation.navigate('DeliveryDetails', { id });
@@ -123,13 +111,13 @@ function Home({ isFocused, navigation }) {
           <HeaderContainer>
             <Title>Entregas</Title>
             <ChooseButtonContainer>
-              <ChooseButton onPress={() => loadDeliveries()}>
-                <ChooseButtonText chose={chosePending}>
+              <ChooseButton onPress={() => loadDeliveries('opened')}>
+                <ChooseButtonText chose={type === 'opened'}>
                   Pendentes
                 </ChooseButtonText>
               </ChooseButton>
               <ChooseButton onPress={() => loadDeliveries('ended')}>
-                <ChooseButtonText chose={choseEnded}>
+                <ChooseButtonText chose={type === 'ended'}>
                   Entregues
                 </ChooseButtonText>
               </ChooseButton>
@@ -137,10 +125,23 @@ function Home({ isFocused, navigation }) {
           </HeaderContainer>
           {loading ? (
             <Loading />
-          ) : hasDeliveries ? (
+          ) : (
             <List
               data={deliveries}
               keyExtractor={(item) => String(item.id)}
+              onRefresh={() => loadDeliveries(type)}
+              refreshing={loading}
+              ListEmptyComponent={
+                <ListContainer>
+                  <ItemContainer>
+                    <HeaderItemContainer>
+                      <HeaderItemText>
+                        Nenhuma encomenda foi encontrada
+                      </HeaderItemText>
+                    </HeaderItemContainer>
+                  </ItemContainer>
+                </ListContainer>
+              }
               renderItem={({ item }) => (
                 <ListContainer>
                   <ItemContainer>
@@ -196,16 +197,6 @@ function Home({ isFocused, navigation }) {
                 </ListContainer>
               )}
             />
-          ) : (
-            <ListContainer>
-              <ItemContainer>
-                <HeaderItemContainer>
-                  <HeaderItemText>
-                    Nenhuma encomenda foi encontrada
-                  </HeaderItemText>
-                </HeaderItemContainer>
-              </ItemContainer>
-            </ListContainer>
           )}
         </DeliveryContainer>
       </Container>
@@ -217,5 +208,3 @@ Home.propTypes = {
   isFocused: PropTypes.bool,
   navigation: PropTypes.object,
 };
-
-export default withNavigationFocus(Home);
