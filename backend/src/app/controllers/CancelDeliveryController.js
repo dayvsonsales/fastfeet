@@ -37,6 +37,12 @@ class CancelDeliveryController {
       return res.status(404).json({ error: 'Delivery not found' });
     }
 
+    if (delivery.end_date || delivery.canceled_at) {
+      return res
+        .status(400)
+        .json({ error: 'Delivery already ended or canceled' });
+    }
+
     delivery.canceled_at = new Date();
 
     const data = await delivery.save();

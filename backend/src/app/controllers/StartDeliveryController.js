@@ -21,6 +21,10 @@ class StartDeliveryController {
       return res.status(404).json({ error: 'Delivery not found' });
     }
 
+    if (delivery.start_date) {
+      return res.status(400).json({ error: 'Delivery already started' });
+    }
+
     const countDeliveriesToday = await Delivery.findAndCountAll({
       where: {
         deliveryman_id: id,

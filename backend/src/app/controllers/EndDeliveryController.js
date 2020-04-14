@@ -20,7 +20,11 @@ class EndDeliveryController {
     }
 
     if (req.body.deliveryman_id !== delivery.deliveryman_id) {
-      return res.status(301).json({ error: 'You are not allowed' });
+      return res.status(400).json({ error: 'You are not allowed' });
+    }
+
+    if (delivery.canceled_at) {
+      return res.status(400).json({ error: 'Delivery already canceled' });
     }
 
     delivery.end_date = new Date();

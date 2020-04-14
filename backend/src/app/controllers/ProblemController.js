@@ -36,6 +36,10 @@ class ProblemController {
       return res.status(400).json({ error: 'Delivery invalid' });
     }
 
+    if (delivery.canceled_at) {
+      return res.status(400).json({ error: 'Delivery already canceled' });
+    }
+
     if (delivery.end_date) {
       return res.status(400).json({ error: 'Delivery is already finished' });
     }
