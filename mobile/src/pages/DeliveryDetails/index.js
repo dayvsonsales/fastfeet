@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, StatusBar } from 'react-native';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import IconCommunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import { format, parseISO } from 'date-fns';
 import PropTypes from 'prop-types';
 
@@ -69,10 +70,16 @@ export default function DeliveryDetails({ route, navigation }) {
       loadDelivery();
       Alert.alert('Sucesso', 'Retirado com sucesso!');
     } catch (e) {
-      Alert.alert(
-        'Erro',
-        'Não foi possível retirar encomenda. Verifique se você está dentro do horário estabelecido e tente novamente mais tarde.'
-      );
+      if (
+        e.response.data.error === 'You have reached your delivery daily limit'
+      ) {
+        Alert.alert('Erro', 'Você atingiu a cota de cinco entregas no dia');
+      } else {
+        Alert.alert(
+          'Erro',
+          'Não foi possível retirar encomenda. Verifique se você está dentro do horário estabelecido e tente novamente mais tarde.'
+        );
+      }
     }
   }
 
@@ -189,7 +196,11 @@ export default function DeliveryDetails({ route, navigation }) {
                         <Button
                           onPress={handleConfirm}
                           disabled={!!delivery.end_date}>
-                          <Icon name="alarm-on" color="#7D40E7" size={24} />
+                          <IconCommunity
+                            name="check-circle-outline"
+                            color="#7D40E7"
+                            size={24}
+                          />
                           <ButtonText>Confirmar Entrega</ButtonText>
                         </Button>
                       </>
