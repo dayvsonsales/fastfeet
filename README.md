@@ -13,7 +13,7 @@
 <p>Esse repositório é do FastFeet, que é uma aplicação completa (Back-end, Front-end e Mobile) que é avaliada para emissão do Certificado do Bootcamp GoStack!</p>
 
 <p align="center">
-  <a href="#sobre">Sobre o desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#instruções">Instruções</a>
+  <a href="#sobre">Sobre o desafio</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#instruções">Instruções</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#mobile">Mobile</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#web">Web</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="#insomnia">Insomnia</a>
 </p>
 
 ## Sobre
@@ -37,6 +37,12 @@ Para o projeto <strong>mobile</strong>, execute ``yarn`` e ``yarn start``. Aqui 
 ## Mobile
 
 O projeto foi testado em um aparelho Redmi Note 8T e no simulador iPhone X, versão 12.0, xcode 10.
+
+<img src=".github/screenshots/01.gif" width="250px" /> <img src=".github/screenshots/02.gif" width="250px" /> <img src=".github/screenshots/03.gif" width="250px" />
+
+## Web
+
+Dentro da pasta frontend há screenshots do projeto web.   
 
 ## Insomnia
 
