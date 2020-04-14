@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { Image } from 'react-native';
 import { useSelector } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { parseISO, format } from 'date-fns';
-import { List as Loading } from 'react-content-loader/native';
 
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Avatar from '~/components/Avatar';
 import { persistor } from '~/store';
 import Background from '~/components/Background';
 
@@ -51,14 +50,13 @@ import Profile from '~/components/Profile';
 export default function Home({ navigation }) {
   const [deliveries, setDeliveries] = useState([]);
   const [type, setType] = useState('opened');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const user = useSelector((state) => state.user.profile);
 
   async function loadDeliveries(_type) {
-    setLoading(true);
-
     setType(_type);
+    setLoading(true);
 
     const response = await api.get(
       `/deliveryman/${user.id}/deliveries/${_type}`
@@ -91,9 +89,9 @@ export default function Home({ navigation }) {
         <ProfileContainer>
           <WelcomeContainer>
             {user.avatar ? (
-              <Image
+              <Avatar
                 style={{ width: 68, height: 68, borderRadius: 34 }}
-                source={{ uri: user.avatar.url }}
+                url={user.avatar.url}
               />
             ) : (
               <Profile>{user.slug}</Profile>
@@ -111,93 +109,89 @@ export default function Home({ navigation }) {
           <HeaderContainer>
             <Title>Entregas</Title>
             <ChooseButtonContainer>
-              <ChooseButton onPress={() => loadDeliveries('opened')}>
+              <ChooseButton onPress={() => loadDeliveries('opened', true)}>
                 <ChooseButtonText chose={type === 'opened'}>
                   Pendentes
                 </ChooseButtonText>
               </ChooseButton>
-              <ChooseButton onPress={() => loadDeliveries('ended')}>
+              <ChooseButton onPress={() => loadDeliveries('ended', true)}>
                 <ChooseButtonText chose={type === 'ended'}>
                   Entregues
                 </ChooseButtonText>
               </ChooseButton>
             </ChooseButtonContainer>
           </HeaderContainer>
-          {loading ? (
-            <Loading />
-          ) : (
-            <List
-              data={deliveries}
-              keyExtractor={(item) => String(item.id)}
-              onRefresh={() => loadDeliveries(type)}
-              refreshing={loading}
-              ListEmptyComponent={
-                <ListContainer>
-                  <ItemContainer>
-                    <HeaderItemContainer>
-                      <HeaderItemText>
-                        Nenhuma encomenda foi encontrada
-                      </HeaderItemText>
-                    </HeaderItemContainer>
-                  </ItemContainer>
-                </ListContainer>
-              }
-              renderItem={({ item }) => (
-                <ListContainer>
-                  <ItemContainer>
-                    <HeaderItemContainer>
-                      <Icon name="local-shipping" color="#7D40E7" size={24} />
-                      <HeaderItemText>Encomenda {item.id}</HeaderItemText>
-                    </HeaderItemContainer>
-                    <TimelineContainer>
-                      <Time>
-                        <BallContainer>
-                          <InvisibleHorizontalLine first />
-                          <Ball active />
-                          <HorizontalLine first />
-                        </BallContainer>
-                        <TimeText>Aguardando Retirada</TimeText>
-                      </Time>
+          <List
+            data={deliveries}
+            keyExtractor={(item) => String(item.id)}
+            onRefresh={() => loadDeliveries(type)}
+            refreshing={loading}
+            ListEmptyComponent={
+              <ListContainer>
+                <ItemContainer>
+                  <HeaderItemContainer>
+                    <HeaderItemText>
+                      Nenhuma encomenda foi encontrada
+                    </HeaderItemText>
+                  </HeaderItemContainer>
+                </ItemContainer>
+              </ListContainer>
+            }
+            renderItem={({ item }) => (
+              <ListContainer>
+                <ItemContainer>
+                  <HeaderItemContainer>
+                    <Icon name="local-shipping" color="#7D40E7" size={24} />
+                    <HeaderItemText>Encomenda {item.id}</HeaderItemText>
+                  </HeaderItemContainer>
+                  <TimelineContainer>
+                    <Time>
+                      <BallContainer>
+                        <InvisibleHorizontalLine first />
+                        <Ball active />
+                        <HorizontalLine first />
+                      </BallContainer>
+                      <TimeText>Aguardando Retirada</TimeText>
+                    </Time>
 
-                      <Time>
-                        <BallContainer>
-                          <HorizontalLine second />
-                          <Ball active={item.start_date} />
-                          <HorizontalLine second />
-                        </BallContainer>
-                        <TimeText>Retirada</TimeText>
-                      </Time>
-                      <Time>
-                        <BallContainer>
-                          <HorizontalLine />
-                          <Ball active={item.end_date} />
-                          <InvisibleHorizontalLine />
-                        </BallContainer>
-                        <TimeText>Entregue</TimeText>
-                      </Time>
-                    </TimelineContainer>
-                    <HeaderFooterContainer>
-                      <InformationContainer>
-                        <DateLabelText>Data</DateLabelText>
-                        <DateText>{item.formatted_date}</DateText>
-                      </InformationContainer>
-                      <InformationContainer>
-                        <DateLabelText>Cidade</DateLabelText>
-                        <DateText>{item.recipient.city}</DateText>
-                      </InformationContainer>
-                      <InformationContainer>
-                        <TouchableOpacity onPress={() => handleDetail(item.id)}>
-                          <Details>
-                            <DetailsText>Ver detalhes</DetailsText>
-                          </Details>
-                        </TouchableOpacity>
-                      </InformationContainer>
-                    </HeaderFooterContainer>
-                  </ItemContainer>
-                </ListContainer>
-              )}
-            />
-          )}
+                    <Time>
+                      <BallContainer>
+                        <HorizontalLine second />
+                        <Ball active={item.start_date} />
+                        <HorizontalLine second />
+                      </BallContainer>
+                      <TimeText>Retirada</TimeText>
+                    </Time>
+                    <Time>
+                      <BallContainer>
+                        <HorizontalLine />
+                        <Ball active={item.end_date} />
+                        <InvisibleHorizontalLine />
+                      </BallContainer>
+                      <TimeText>Entregue</TimeText>
+                    </Time>
+                  </TimelineContainer>
+                  <HeaderFooterContainer>
+                    <InformationContainer>
+                      <DateLabelText>Data</DateLabelText>
+                      <DateText>{item.formatted_date}</DateText>
+                    </InformationContainer>
+                    <InformationContainer>
+                      <DateLabelText>Cidade</DateLabelText>
+                      <DateText>{item.recipient.city}</DateText>
+                    </InformationContainer>
+                    <InformationContainer>
+                      <TouchableOpacity onPress={() => handleDetail(item.id)}>
+                        <Details>
+                          <DetailsText>Ver detalhes</DetailsText>
+                        </Details>
+                      </TouchableOpacity>
+                    </InformationContainer>
+                  </HeaderFooterContainer>
+                </ItemContainer>
+              </ListContainer>
+            )}
+          />
         </DeliveryContainer>
       </Container>
     </Background>
