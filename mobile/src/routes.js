@@ -26,6 +26,32 @@ import DeliveryDetails from '~/pages/DeliveryDetails';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+const tabStyleiOS = {
+  backgroundColor: '#fff',
+  elevation: 10,
+  borderTopWidth: 0,
+  paddingBottom: 30,
+  paddingTop: 10,
+  height: 90,
+  marginTop: 1,
+  shadowOffset: {
+    width: 0,
+    height: -2,
+  },
+  shadowOpacity: 0.1,
+  shadowRadius: 6,
+};
+const tabStyleAndroid = {
+  backgroundColor: '#fff',
+  elevation: 10,
+  borderTopWidth: 0,
+  paddingBottom: 10,
+  paddingTop: 15,
+  top: 1,
+  height: 70,
+  marginTop: 1,
+};
+
 const tabBarIcon = (props, name) => {
   return <Icon name={name} size={24} color={props.color} />;
 };
@@ -119,22 +145,7 @@ export default function Routes() {
             keyboardHidesTabBar: true,
             activeTintColor: '#7D40E7',
             inactiveTintColor: '#999999',
-            style: {
-              backgroundColor: '#fff',
-              elevation: 10,
-              borderTopWidth: 0,
-              paddingBottom: Platform.OS === 'ios' ? 30 : 10,
-              paddingTop: Platform.OS === 'ios' ? 10 : 15,
-              top: 1,
-              height: Platform.OS === 'ios' ? 90 : 70,
-              marginTop: 1,
-              shadowOffset: {
-                width: 0,
-                height: -2,
-              },
-              shadowOpacity: 0.1,
-              shadowRadius: 6,
-            },
+            style: Platform.OS === 'android' ? tabStyleAndroid : tabStyleiOS,
           }}>
           <Tab.Screen
             name="Home"
