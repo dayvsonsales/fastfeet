@@ -13,6 +13,7 @@ export const Container = styled.div`
       border-radius: 50%;
       background: #ffffff 0% 0% no-repeat padding-box;
       border: 1px dashed #dddddd;
+      image-orientation: from-image;
     }
     input {
       display: none;

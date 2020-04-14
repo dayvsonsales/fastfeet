@@ -35,6 +35,7 @@ export const Content = styled.div`
     height: 44px;
     margin-left: -20px;
     align-self: flex-start;
+    image-orientation: from-image;
   }
 
   form {

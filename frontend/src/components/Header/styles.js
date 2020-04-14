@@ -25,6 +25,7 @@ export const Content = styled.div`
       margin-right: 30px;
       width: 135px;
       height: 26px;
+      image-orientation: from-image;
     }
 
     div {

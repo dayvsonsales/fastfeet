@@ -20,5 +20,6 @@ export const Container = styled.div`
     height: 32px;
     border-radius: 50%;
     margin-right: 5px;
+    image-orientation: from-image;
   }
 `;
