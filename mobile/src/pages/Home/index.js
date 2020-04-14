@@ -112,7 +112,7 @@ function Home({ isFocused, navigation }) {
             )}
             <Salute>
               <Welcome>Bem vindo de volta,</Welcome>
-              <Name>Gaspar Antunes</Name>
+              <Name>{user.name}</Name>
             </Salute>
           </WelcomeContainer>
           <TouchableOpacity onPress={handleLogout}>

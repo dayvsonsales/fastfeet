@@ -56,6 +56,7 @@
   <key>UIAppFonts</key>
   <array>
     <string>MaterialIcons.ttf</string>
+    <string>MaterialCommunityIcons.ttf</string>
   </array>
   <key>NSCameraUsageDescription</key>
   <string>Camera com finalidade de tirar foto da assinatura</string>
