@@ -63,7 +63,9 @@ export default function Problem() {
 
         toast.success('Cancelado com sucesso!');
       } catch (e) {
-        toast.error('Não foi possível remover problema.');
+        toast.error(
+          'Não foi possível cancelar encomenda. Verifique se ela está ativa ou se já foi entregue.'
+        );
       }
     }
   }
