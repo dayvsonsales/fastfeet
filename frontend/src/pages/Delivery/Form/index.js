@@ -41,7 +41,7 @@ export default function Form({ history }) {
     api.get(`/recipients?q=${input}`).then((response) => {
       const options = response.data.rows.map((_recipient) => ({
         value: _recipient.id,
-        label: _recipient.name,
+        label: `${_recipient.id} - ${_recipient.name}`,
       }));
 
       callback(options);
@@ -52,7 +52,7 @@ export default function Form({ history }) {
     api.get(`/deliveryman?q=${input}`).then((response) => {
       const options = response.data.rows.map((_deliveryman) => ({
         value: _deliveryman.id,
-        label: _deliveryman.name,
+        label: `${_deliveryman.id} - ${_deliveryman.name}`,
       }));
 
       callback(options);
@@ -100,11 +100,11 @@ export default function Form({ history }) {
         const data = response.data.rows.map((_delivery) => ({
           ..._delivery,
           deliveryman_id: {
-            label: _delivery.deliveryman.name,
+            label: `${_delivery.deliveryman.id} - ${_delivery.deliveryman.name}`,
             value: _delivery.deliveryman.id,
           },
           recipient_id: {
-            label: _delivery.recipient.name,
+            label: `${_delivery.recipient.id} - ${_delivery.recipient.name}`,
             value: _delivery.recipient.id,
           },
         }));
