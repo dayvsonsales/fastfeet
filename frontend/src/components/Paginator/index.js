@@ -16,7 +16,7 @@ export default function Paginator({
   }
 
   const div = total / limit;
-  const activePrevious = page === 1;
+  const activePrevious = page <= 1;
   const activeNext = page >= div;
   const pages = Math.ceil(div);
 
