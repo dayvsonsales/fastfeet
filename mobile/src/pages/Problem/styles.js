@@ -29,6 +29,11 @@ export const ProblemInput = styled.TextInput.attrs({
   multiline: true,
 })`
   font-size: 16px;
+  ${() =>
+    Platform.OS === 'ios' &&
+    css`
+      height: 300px;
+    `}
 `;
 
 export const SubmitButton = styled.TouchableOpacity`
