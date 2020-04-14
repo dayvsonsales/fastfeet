@@ -38,6 +38,8 @@ Para o projeto <strong>mobile</strong>, execute ``yarn`` e ``yarn start``. Aqui 
 
 O projeto foi testado em um aparelho Redmi Note 8T e no simulador iPhone X, versão 12.0, xcode 10.
 
+<img src=".github/screenshots/01.gif" width="250px" /> <img src=".github/screenshots/02.gif" width="250px" /> <img src=".github/screenshots/03.gif" width="250px" />
+
 ## Insomnia
 
 Se você deseja apenas testar a API, há um arquivo chamado ```Fastfeet-insomnia.json``` na raiz que poderá ser importado dentro da ferramenta Insomnia e que possui as rotas do backend.
