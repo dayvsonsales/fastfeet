@@ -48,6 +48,10 @@ export const DropdownContent = styled.div.attrs({
   align-items: flex-start;
   justify-content: flex-start;
 
+  @media (max-width: 768px) {
+    position: static !important;
+  }
+
   border-radius: 4px;
 
   button {

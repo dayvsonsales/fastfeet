@@ -3,14 +3,27 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    span {
+      margin-top: 10px;
+    }
+  }
 `;
 
 export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  flex: 2 0 0;
-  margin-left: 100px;
+
+  @media (min-width: 769px) {
+    flex: 2 0 0;
+    margin-left: 100px;
+  }
 `;
 
 export const Previous = styled.button`

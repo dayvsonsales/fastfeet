@@ -6,6 +6,11 @@ export const Container = styled.div`
   justify-content: space-between;
   margin-top: 34px;
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+    margin-right: 10px;
+  }
+
   button {
     padding-top: 5px;
     padding-left: 16px;
@@ -15,6 +20,10 @@ export const Container = styled.div`
     color: #fff;
     border-radius: 4px;
     border: 1px solid #eee;
+
+    @media (max-width: 768px) {
+      margin-top: 10px;
+    }
 
     svg {
       vertical-align: middle;

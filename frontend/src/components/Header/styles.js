@@ -2,8 +2,13 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   background: #fff;
+
   padding: 0 30px;
   border: 1px solid #dddddd;
+
+  @media (max-width: 768px) {
+    padding: 0;
+  }
 `;
 
 export const Content = styled.div`
@@ -22,7 +27,12 @@ export const Content = styled.div`
     padding-bottom: 20px;
 
     img {
+      @media (max-width: 768px) {
+        margin-right: 90px;
+      }
+
       margin-right: 30px;
+
       width: 135px;
       height: 26px;
       image-orientation: from-image;

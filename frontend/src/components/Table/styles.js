@@ -39,5 +39,13 @@ export const Table = styled.table.attrs({
 `;
 
 export const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   overflow-x: inherit;
+
+  @media (max-width: 768px) {
+    overflow: auto;
+    margin-right: 10px;
+  }
 `;

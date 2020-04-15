@@ -18,6 +18,11 @@ export const Container = styled.div`
 
 export const ModalContainer = styled.div`
   width: 450px;
+
+  @media (max-width: 768px) {
+    width: 360px;
+  }
+
   min-height: 353px;
   max-height: 425px;
   border-radius: 4px;

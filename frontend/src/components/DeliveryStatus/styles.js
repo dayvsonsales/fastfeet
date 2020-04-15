@@ -18,6 +18,11 @@ export const Status = styled.div`
   position: absolute;
   margin: -12px;
 
+  @media (max-width: 768px) {
+    white-space: nowrap;
+    word-break: normal !important;
+  }
+
   div {
     width: 10px;
     height: 10px;
