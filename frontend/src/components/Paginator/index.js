@@ -42,7 +42,7 @@ export default function Paginator({
       </Container>
 
       <span>
-        Página {page} de {pages || 1}. Total de {total} registros.
+        Página {page || 1} de {pages || 1}. Total de {total} registros.
       </span>
     </Wrapper>
   );
