@@ -19,6 +19,8 @@ import {
   Zip,
   Date,
   HorizontalLine,
+  Row,
+  TSelect,
 } from './styles';
 
 import ActionList from '~/components/ActionList';
@@ -34,6 +36,14 @@ import { generateSlug, type } from '~/utils/helper';
 
 import Paginator from '~/components/Paginator';
 
+const options = [
+  { label: 'Todos', value: '' },
+  { label: 'Aguardando Retirada', value: 'pending' },
+  { label: 'Retirada', value: 'started' },
+  { label: 'Cancelado', value: 'canceled' },
+  { label: 'Entregue', value: 'ended' },
+];
+
 export default function Delivery({ history }) {
   const refModal = useRef(null);
   const [show, setShow] = useState(false);
@@ -43,6 +53,8 @@ export default function Delivery({ history }) {
 
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
+
+  const [status, setStatus] = useState('');
 
   const [loading, setLoading] = useState(true);
 
@@ -86,6 +98,13 @@ export default function Delivery({ history }) {
     }
   }
 
+  function handleSelect(selected, action) {
+    if (action.action === 'select-option') {
+      setPage(1);
+      setStatus(selected.value);
+    }
+  }
+
   useEffect(() => {
     async function loadDeliveries() {
       if (page < 1) {
@@ -94,7 +113,9 @@ export default function Delivery({ history }) {
 
       setLoading(true);
 
-      const response = await api.get(`/delivery?page=${page}&q=${product}`);
+      const response = await api.get(
+        `/delivery?page=${page}&q=${product}&status=${status}`
+      );
 
       setTotal(response.data.count);
 
@@ -127,7 +148,7 @@ export default function Delivery({ history }) {
     }
 
     loadDeliveries();
-  }, [product, page]);
+  }, [product, page, status]);
 
   return (
     <>
@@ -141,13 +162,25 @@ export default function Delivery({ history }) {
             placeholder="Buscar por encomendas"
             onEnter={handleSearch}
           />
-          <button
-            type="button"
-            onClick={() => history.push('/delivery/create')}
-          >
-            <MdAdd size={24} color="#fff" />
-            <span>Cadastrar</span>
-          </button>
+          <Row>
+            <TSelect
+              components={{
+                IndicatorSeparator: () => null,
+              }}
+              defaultValue={{ label: 'Todos', value: 0 }}
+              placeholder="Selecione..."
+              noOptionsMessage={() => 'Nenhum registro encontrado'}
+              options={options}
+              onChange={handleSelect}
+            />
+            <button
+              type="button"
+              onClick={() => history.push('/delivery/create')}
+            >
+              <MdAdd size={24} color="#fff" />
+              <span>Cadastrar</span>
+            </button>
+          </Row>
         </ActionList>
         {loading ? (
           <Loading

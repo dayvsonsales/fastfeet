@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Select from 'react-select';
 
 export const Container = styled.div`
   padding-top: 34px;
@@ -81,4 +82,14 @@ export const HorizontalLine = styled.div`
   border-bottom: 1px solid #f5f5f5;
   margin-top: 5px;
   margin-bottom: 5px;
+`;
+
+export const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const TSelect = styled(Select)`
+  width: 250px;
+  margin-right: 20px;
 `;
