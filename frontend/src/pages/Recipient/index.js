@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { BulletList as Loading } from 'react-content-loader';
 import PropTypes from 'prop-types';
-import { Container } from './styles';
+import { Container } from '~/components/Container/styles';
+
 import Dropdown from '~/components/Dropdown';
 
 import api from '~/services/api';

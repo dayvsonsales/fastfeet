@@ -1,27 +1,6 @@
 import styled from 'styled-components';
 import Select from 'react-select';
 
-export const Container = styled.div`
-  padding-top: 34px;
-  padding-left: 120px;
-  margin-right: 120px;
-  display: flex;
-  flex-direction: column;
-
-  header {
-    display: flex;
-    align-self: flex-start;
-
-    strong {
-      color: #444444;
-      font-size: 24px;
-      text-align: right;
-      letter-spacing: 0;
-      color: #444444;
-    }
-  }
-`;
-
 export const DeliveryInformation = styled.div`
   display: flex;
   flex-direction: column;
@@ -87,9 +66,18 @@ export const HorizontalLine = styled.div`
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const TSelect = styled(Select)`
   width: 250px;
   margin-right: 20px;
+
+  @media (max-width: 768px) {
+    margin-right: 0px;
+    width: 100%;
+    margin-top: 10px;
+  }
 `;

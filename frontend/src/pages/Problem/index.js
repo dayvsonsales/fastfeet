@@ -5,7 +5,8 @@ import { MdDeleteForever, MdCreate } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import { BulletList as Loading } from 'react-content-loader';
 import api from '~/services/api';
-import { Container, ProblemInformation } from './styles';
+import { ProblemInformation } from './styles';
+import { Container } from '~/components/Container/styles';
 
 import Dropdown from '~/components/Dropdown';
 

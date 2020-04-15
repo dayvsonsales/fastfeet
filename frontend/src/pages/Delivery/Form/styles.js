@@ -7,14 +7,29 @@ export const Container = styled.div`
   padding-left: 270px;
   padding-top: 27px;
 
+  @media (max-width: 768px) {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
   header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      align-items: center;
+      justify-content: center;
+    }
 
     div {
       display: flex;
       flex-direction: row;
+
+      @media (max-width: 768px) {
+        margin-top: 10px;
+      }
 
       button:first-child {
         padding-right: 20px;

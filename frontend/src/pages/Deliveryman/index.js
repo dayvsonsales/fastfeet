@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { BulletList as Loading } from 'react-content-loader';
 import api from '~/services/api';
 
-import { Container } from './styles';
+import { Container } from '~/components/Container/styles';
 
 import ActionList from '~/components/ActionList';
 import Table from '~/components/Table';

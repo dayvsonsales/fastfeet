@@ -12,7 +12,6 @@ import { BulletList as Loading } from 'react-content-loader';
 import api from '~/services/api';
 
 import {
-  Container,
   DeliveryInformation,
   Street,
   CityAndState,
@@ -29,6 +28,7 @@ import Profile from '~/components/Profile';
 import DeliveryStatus from '~/components/DeliveryStatus';
 import Modal from '~/components/Modal';
 import Dropdown from '~/components/Dropdown';
+import { Container } from '~/components/Container/styles';
 
 import SearchInput from '~/components/ActionList/SearchInput';
 
