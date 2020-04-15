@@ -11,11 +11,11 @@ import NewDeliveryMail from '../jobs/NewDeliveryMail';
 class DeliveryController {
   async index(req, res) {
     const { page = 1 } = req.query;
-    const { q = '', id } = req.query;
+    const { q = '', id, status } = req.query;
 
     const limit = 5;
 
-    const deliveries = await Delivery.findAndCountAll({
+    const options = {
       offset: (page - 1) * limit,
       limit,
       include: [
@@ -42,7 +42,21 @@ class DeliveryController {
         },
       },
       order: [['id', 'asc']],
-    });
+    };
+
+    if (status === 'pending') {
+      options.where.start_date = null;
+    } else if (status === 'started') {
+      options.where.start_date = { [Op.ne]: null };
+      options.where.canceled_at = { [Op.eq]: null };
+      options.where.end_date = { [Op.eq]: null };
+    } else if (status === 'canceled') {
+      options.where.canceled_at = { [Op.ne]: null };
+    } else if (status === 'ended') {
+      options.where.end_date = { [Op.ne]: null };
+    }
+
+    const deliveries = await Delivery.findAndCountAll(options);
 
     return res.json(deliveries);
   }
