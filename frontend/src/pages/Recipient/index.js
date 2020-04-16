@@ -72,9 +72,9 @@ export default function Recipient({ history }) {
 
       const data = response.data.rows.map((recipient) => ({
         ...recipient,
-        full_address: `${recipient.street}, ${recipient.number || 'S/N'}, ${
-          recipient.city
-        } - ${recipient.state}`,
+        full_address: `${recipient.street}, ${recipient.number || 'S/N'} ${
+          recipient.address_line
+        }, ${recipient.city} - ${recipient.state}`,
       }));
 
       setLoading(false);

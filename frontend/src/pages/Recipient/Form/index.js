@@ -16,7 +16,7 @@ const schema = Yup.object().shape({
   name: Yup.string().required('O nome é obrigatório'),
   street: Yup.string().required('A rua é obrigatória'),
   number: Yup.number().typeError('Número apenas').required('Campo obrigatório'),
-  address_line: Yup.string().required('Campo obrigatório'),
+  address_line: Yup.string(),
   city: Yup.string().required('Cidade é obrigatória'),
   state: Yup.string().required('Estado é obrigatório'),
   zip_code: Yup.string().required('CEP é obrigatório'),
