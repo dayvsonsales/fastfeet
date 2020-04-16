@@ -47,6 +47,8 @@ export const Container = styled.div`
     }
   }
   section {
+    display: flex;
+    flex-direction: column;
     margin-top: 20px;
     background: #ffffff 0% 0% no-repeat padding-box;
     border-radius: 4px;
@@ -77,11 +79,9 @@ export const Row = styled.div.attrs({
 })`
   display: flex;
   flex-direction: row;
-  width: 100%;
 
   @media (max-width: 1024px) {
     flex-direction: column;
-    width: 100%;
   }
 `;
 

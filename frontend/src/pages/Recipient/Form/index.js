@@ -140,7 +140,7 @@ export default function Form({ history }) {
             </Column>
           </Row>
           <Row>
-            <Column>
+            <Column width="34%">
               <label>Cidade</label>
               <Input
                 name="city"
@@ -148,11 +148,11 @@ export default function Form({ history }) {
                 placeholder="Digite o nome da cidade"
               />
             </Column>
-            <Column>
+            <Column width="33%">
               <label>Estado</label>
               <Input name="state" type="text" placeholder="Digite o estado" />
             </Column>
-            <Column>
+            <Column width="33%">
               <label>CEP</label>
               <MaskInput
                 name="zip_code"
