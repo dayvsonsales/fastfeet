@@ -19,7 +19,7 @@ export default function Header() {
     <Container>
       <Content>
         <nav>
-          <img src={logo} alt="Gobarber" />
+          <img src={logo} alt="Fastfeet" />
           <div />
           <NavLink to="/delivery" activeClassName="is-active">
             ENCOMENDAS
