@@ -46,7 +46,7 @@ export default function Problem({ route }) {
       <Container>
         <ProblemContainer>
           <ProblemInput
-            maxLength={40}
+            maxLength={255}
             onChangeText={(text) => setDescription(text)}
             value={description}
             placeholder="Inclua aqui o problema que ocorreu na entrega"

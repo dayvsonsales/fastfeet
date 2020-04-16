@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const Background = styled(LinearGradient).attrs({
@@ -9,7 +9,7 @@ export const Background = styled(LinearGradient).attrs({
   background-color: black;
 `;
 
-export const Container = styled.ScrollView`
+export const Container = styled.View`
   margin-top: ${() => (Platform.OS === 'ios' ? '90px' : '60px')};
   padding: 20px;
   flex: 1;
@@ -18,6 +18,13 @@ export const Container = styled.ScrollView`
 export const ProblemContainer = styled.KeyboardAvoidingView`
   flex-direction: column;
   padding: 20px;
+
+  ${() =>
+    Platform.OS === 'android' &&
+    css`
+      padding-top: 0px;
+    `}
+
   height: 300px;
   border-radius: 4px;
   background: #ffffff;
@@ -27,6 +34,7 @@ export const ProblemContainer = styled.KeyboardAvoidingView`
 export const ProblemInput = styled.TextInput.attrs({
   placeholderTextColor: '#999999',
   multiline: true,
+  numberOfLines: 4,
 })`
   font-size: 16px;
   ${() =>
@@ -48,4 +56,5 @@ export const SubmitButton = styled.TouchableOpacity`
 export const SubmitButtonText = styled.Text`
   color: #ffffff;
   font-weight: bold;
+  font-size: 16px;
 `;

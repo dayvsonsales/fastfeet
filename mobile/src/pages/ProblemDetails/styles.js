@@ -12,10 +12,12 @@ export const Background = styled(LinearGradient).attrs({
 export const Container = styled.ScrollView`
   margin-top: ${() => (Platform.OS === 'ios' ? '90px' : '80px')};
   padding: 20px;
+  flex: 1;
 `;
 
 export const ItemContainer = styled.View`
   flex-direction: column;
+  padding-bottom: 30px;
 `;
 
 export const Header = styled.View`

@@ -183,9 +183,11 @@ export default function DeliveryDetails({ route, navigation }) {
                   <Button
                     onPress={handleProblem}
                     disabled={
-                      !delivery.start_date ||
-                      delivery.end_date ||
-                      delivery.canceled_at
+                      !!(
+                        !delivery.start_date ||
+                        delivery.end_date ||
+                        delivery.canceled_at
+                      )
                     }>
                     <Icon
                       name="highlight-off"
