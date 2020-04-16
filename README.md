@@ -28,7 +28,7 @@ A versão mobile do projeto FastFeet representa a visão do entregador, ou seja,
 
 Para funcionar o projeto inteiro primeiramente você deve ter configurado o PostgreSQL com um banco de dados chamado <strong>fastfeet</strong> e o Redis configurado. Depois entre no projeto <strong>backend</strong> e, de acordo com o arquivo .env.example, crie um .env com as variáveis preenchidas. Para debug é utilizado a ferramenta Reactotron.
 
-Dentro do projeto <strong>backend</strong> execute ``yarn``, para instalar as dependências, depois execute os comando ``yarn sequelize db:migrate`` e ``yarn sequelize db:seed:all``, que irão criar as tabelas e o usuário inicial (login: admin@fastfeet.com senha: 123456) e, por fim, rode ``yarn start`` e ``yarn queue`` para rodar a aplicação e a fila de e-mail, respectivamente.  
+Dentro do projeto <strong>backend</strong> execute ``yarn``, para instalar as dependências, depois execute os comando ``yarn sequelize db:migrate`` e ``yarn sequelize db:seed:all``, que irão criar as tabelas e o usuário inicial (login: admin@fastfeet.com senha: 123456) e, por fim, rode ``yarn dev`` e ``yarn queue`` para rodar a aplicação e a fila de e-mail, respectivamente.  
 
 Para o projeto <strong>frontend</strong>, execute ``yarn`` e ``yarn start``.  
 
