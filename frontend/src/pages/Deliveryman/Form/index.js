@@ -43,8 +43,7 @@ export default function Form({ history }) {
 
       if (!id) {
         await api.post('deliveryman', data);
-
-        reset();
+        history.goBack();
       } else {
         await api.put(`deliveryman/${id}`, data);
       }
