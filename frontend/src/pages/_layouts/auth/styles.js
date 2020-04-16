@@ -2,12 +2,12 @@ import styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Wrapper = styled.div`
-  height: 100%;
-  background: #7d40e7;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: #7d40e7;
 `;
 
 export const Container = styled.div`
@@ -16,7 +16,7 @@ export const Container = styled.div`
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 0px 10px #00000033;
 
-  min-width: 390px;
+  min-width: 350px;
   min-height: 200px;
 
   border-radius: 4px;
