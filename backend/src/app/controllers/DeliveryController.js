@@ -46,6 +46,8 @@ class DeliveryController {
 
     if (status === 'pending') {
       options.where.start_date = null;
+      options.where.canceled_at = { [Op.eq]: null };
+      options.where.end_date = { [Op.eq]: null };
     } else if (status === 'started') {
       options.where.start_date = { [Op.ne]: null };
       options.where.canceled_at = { [Op.eq]: null };
