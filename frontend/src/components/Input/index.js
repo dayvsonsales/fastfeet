@@ -29,6 +29,7 @@ export default function Input({ name, ...rest }) {
           e.target.value = '';
           e.target.value = val;
         }}
+        maxLength={255}
       />
 
       {error && <span className="error">{error}</span>}
