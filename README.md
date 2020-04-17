@@ -32,7 +32,7 @@ Dentro do projeto <strong>backend</strong> execute ``yarn``, para instalar as de
 
 Para o projeto <strong>frontend</strong>, execute ``yarn`` e ``yarn start``.  
 
-Para o projeto <strong>mobile</strong>, execute ``yarn`` e rode o projeto de acordo com sua plataforma (veja mais na documentação do React Native). Para rodar em um aparelho você deverá alterar os arquivos config/Reactotron.js e services/api.js para adicionar o IP que o backend está rodando. Por exemplo, se você está em rede 10.0.0.100 e seu smartphone em 10.0.0.101, altere o IP localizado em api.js para 10.0.0.100:3333 e adicione dentro de configure() um objeto `{ host: '10.0.0.100'}`. Lembre-se também de colocar o APP_URL correto no .env do backend, para que as imagens sejam exibidas.
+Para o projeto <strong>mobile</strong>, execute ``yarn`` e rode o projeto de acordo com sua plataforma (veja mais na documentação do React Native). Para rodar em um aparelho você deverá alterar os arquivos ``config/Reactotron.js``  e services/api.js para adicionar o IP que o backend está rodando. Por exemplo, se você está em rede 10.0.0.100 e seu smartphone em 10.0.0.101, altere o IP localizado em ``api.js`` para 10.0.0.100:3333 e adicione dentro de ``configure()`` um objeto `{ host: '10.0.0.100'}` dentro de ``config/Reactotron.js``. Lembre-se também de colocar o ``APP_URL`` correto no .env do backend, para que as imagens sejam exibidas.
 
 ## Mobile
 
