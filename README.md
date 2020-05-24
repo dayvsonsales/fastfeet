@@ -42,7 +42,7 @@ O projeto foi testado em um aparelho Redmi Note 8T e no simulador iPhone X, vers
 
 ## Web
 
-Dentro da pasta frontend há screenshots do projeto web.   
+Dentro da pasta frontend há screenshots do projeto web. Se você quiser apenas testar, acesse: https://dayvson.mobi/fastfeet/ com login: `admin@fastfeet.com` e senha: `123456`.
 
 ## Insomnia
 
