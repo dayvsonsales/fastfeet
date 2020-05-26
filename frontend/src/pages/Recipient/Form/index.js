@@ -52,7 +52,6 @@ export default function Form({ history }) {
 
       toast.success('Salvo com sucesso!');
     } catch (err) {
-      console.tron.log(err);
       const validationErrors = {};
 
       if (err instanceof Yup.ValidationError) {

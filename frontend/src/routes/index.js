@@ -1,11 +1,10 @@
 import React from 'react';
-import { Router, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import { ToastContainer } from 'react-toastify';
 import Route from './Route';
 
-import history from '~/services/history';
 import SignIn from '~/pages/SignIn';
 import Delivery from '~/pages/Delivery';
 import Deliveryman from '~/pages/Deliveryman';
@@ -41,7 +40,7 @@ export default function Routes() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <Router history={history}>
+        <BrowserRouter>
           <ToastContainer autoClose={3000} />
           <GlobalStyle />
           <Switch>
@@ -93,7 +92,7 @@ export default function Routes() {
             />
             <Route path="/problem" component={Problem} isPrivate />
           </Switch>
-        </Router>
+        </BrowserRouter>
       </PersistGate>
     </Provider>
   );

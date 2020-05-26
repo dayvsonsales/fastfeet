@@ -31,7 +31,6 @@ export default function SignIn() {
 
       dispatch(signInRequest(email, password));
     } catch (err) {
-      console.tron.log(err);
       const validationErrors = {};
 
       if (err instanceof Yup.ValidationError) {

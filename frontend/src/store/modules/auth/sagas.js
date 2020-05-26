@@ -8,8 +8,6 @@ import { signInSuccess, signInFailure } from './action';
 export function* signIn({ payload }) {
   const { email, password } = payload;
 
-  console.tron.log(payload);
-
   try {
     const response = yield call(api.post, 'sessions', {
       email,
