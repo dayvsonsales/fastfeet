@@ -1,16 +1,15 @@
 pipeline {
     agent any
-
     stages {
         stage('Build'){
             steps {
-                make install
+                sh 'make install'
             }
         }
         
         stage('Lint'){
             steps {
-                make eslint
+                sh 'make eslint'
             }
         }
 
