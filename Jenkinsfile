@@ -16,13 +16,13 @@ pipeline {
 
         stage('Docker'){
             steps {
-                sh docker.sh
+                sh '/home/ubuntu/docker.sh'
             }
         }
         
         stage('Deploy'){
             steps {
-                sh deploy.sh
+                sh '/home/ubuntu/deploy.sh'
             }
         }
     }
