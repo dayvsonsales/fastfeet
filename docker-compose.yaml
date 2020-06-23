@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+    db: 
+        image: postgres:latest
+        volumes:
+            - db_data:/var/lib/postgresql/data 
+        restart: always
+        environment: 
+            POSTGRES_PASSWORD: docker
+        ports:
+            - "5500:5432"
+    redis:
+        image: redis:latest
+        restart: always
+        ports:
+            - "6379:6379"
+    backend: 
+        depends_on: 
+            - redis
+            - db
+        build: ./backend
+        image: dayvsonsales/fastfeet-backend
+        ports:
+            - "3333:3333"
+    frontend: 
+        depends_on: 
+            - backend
+        build: ./frontend
+        image: dayvsonsales/fastfeet-frontend
+        ports:
+            - "8000:80"
+volumes:
+    db_data: {}
+    
